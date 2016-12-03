@@ -5,10 +5,10 @@
         <div class="row">
             <div class="col-sm-7">{{ panier_article.article.getLibelle }}</div>
             <div class="col-sm-2">x{{ panier_article.quantity }}</div>
-            <div class="col-sm-3">{{ panier_article.article.getPrice }}€</div>
+            <div class="col-sm-3 data-price">{{ panier_article.article.getPrice }}€</div>
         </div>
     </li>
     {% endfor %}
     <hr>
-    <li class="list-group-item">Total : {{ panier_information.total_price }}€</li>
+    <li class="list-group-item data-price">Total : {{ panier_information.total_price }}€</li>
 </ul>

@@ -26,7 +26,7 @@
                 <td>{{ article.getLibelle }}</td>
                 <td>{{ article.getCategory.getName }}</td>
                 <td>{{ article.getStock }}</td>
-                <td>{{ article.getPrice }}€</td>
+                <td class="table-data-price">{{ article.getPrice }}€</td>
                 <td>
                     <a href="{{ path('addArticle', { 'article_id': article.getId }) }}"
                        class="btn btn-default btn-xs">
