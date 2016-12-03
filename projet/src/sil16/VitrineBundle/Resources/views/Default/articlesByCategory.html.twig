@@ -25,7 +25,11 @@
             <td>{{ article.getLibelle }}</td>
             <td>{{ article.getStock }}</td>
             <td>{{ article.getPrice }}€</td>
-            <td><button type="button" class="btn btn-default btn-xs">Ajouter au panier</button></td>
+            <td>
+                <a href="{{ path('addArticle', { 'article_id': article.getId }) }}"
+                   class="btn btn-default btn-xs">
+                    <span class="glyphicon glyphicon-plus"></span> Ajouter au panier</a>
+            </td>
         </tr>
         {% endfor %}
         </tbody>

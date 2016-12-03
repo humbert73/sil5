@@ -17,3 +17,28 @@ catalogue:
 catalogueWithCategory:
     path:     /catalogue/{category_id}
     defaults: { _controller: sil16VitrineBundle:Default:articlesByCategory }
+
+#Actions relatif au panier
+contenuPanier:
+    path:     /panier
+    defaults: { _controller: sil16VitrineBundle:Default:contenuPanier }
+
+addArticle:
+    path:     /addArticle/{article_id}
+    defaults: { _controller: sil16VitrineBundle:Default:addArticle }
+
+addArticleFromCategory:
+    path:     /addArticle/{article_id}
+    defaults: { _controller: sil16VitrineBundle:Default:addArticleFromCategory }
+
+removeArticleFromPanier:
+    path:     /removeArticleFromPanier/{article_id}
+    defaults: { _controller: sil16VitrineBundle:Default:removeArticleFromPanier }
+
+removePanierContent:
+    path:     /removePanierContent
+    defaults: { _controller: sil16VitrineBundle:Default:removePanierContent }
+
+panierInformationAction:
+    path:     /panierInformation
+    defaults: { _controller: sil16VitrineBundle:Default:panierInformation }

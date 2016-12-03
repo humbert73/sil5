@@ -1,3 +1,15 @@
-body {
-    background-color: #868686;
+.table-data-price {
+    text-align: right;
+    width: 120px;
+}
+#btn-nav-shop {
+    margin-right: 8px;
+}
+
+#table-row-total td{
+    vertical-align: bottom;
+}
+
+#main {
+    margin-right: 0;
 }

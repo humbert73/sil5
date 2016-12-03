@@ -32,11 +32,13 @@ class Panier
         }
     }
 
-    public function supprimeArticle($articleId) {
-        // supprimer l'article $articleId du contenu
+    public function supprimeArticle($article_id) {
+        unset($this->contenu[$article_id]);
     }
 
-    public function viderPanier() {
-        // vide le contenu
+    public function viderPanier()
+    {
+        unset($this->contenu);
+        $this->contenu = array();
     }
 }

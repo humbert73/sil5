@@ -1,0 +1,14 @@
+<h4>Mon panier</h4>
+<ul class="list-group">
+    {% for panier_article in panier_information.panier_articles %}
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col-sm-7">{{ panier_article.article.getLibelle }}</div>
+            <div class="col-sm-2">x{{ panier_article.quantity }}</div>
+            <div class="col-sm-3">{{ panier_article.article.getPrice }}€</div>
+        </div>
+    </li>
+    {% endfor %}
+    <hr>
+    <li class="list-group-item">Total : {{ panier_information.total_price }}€</li>
+</ul>

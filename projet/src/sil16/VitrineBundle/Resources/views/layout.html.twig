@@ -3,38 +3,56 @@
 <head>
     <meta charset="utf-8">
     <title>Super site</title>
-    <link href="{{ asset('bundles/sil16vitrine/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    {#<link href="{{ asset('bundles/sil16vitrine/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />#}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="{{ asset('bundles/sil16vitrine/style.css') }}" rel="stylesheet" type="text/css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 <header>
-</header>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">WebSiteName</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li><a href="{{ path('accueil') }}">accueil</a></li>
-            <li><a href="{{ path('mentions') }}">mentions</a></li>
-            <li><a href="{{ path('catalogue') }}">catalogue</a></li>
-        </ul>
-    </div>
-</nav>
-<div id="main" class="row">
-    <div id="sidebar" class="col-sm-2">
-        {#<div class="list-group">#}
-            {#<a href="#" class="list-group-item disabled">First item</a>#}
-            {#<a href="#" class="list-group-item">Second item</a>#}
-            {#<a href="#" class="list-group-item">Third item</a>#}
-        {#</div>#}
-    </div>
-    <div class="col-sm-10">
+    <nav class="navbar navbar-default">
         <div class="container-fluid">
-        {% block content %}
-        {% endblock %}
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{{ path('accueil') }}">Sil5 e-commerce</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="{{ path('mentions') }}">mentions</a></li>
+                <li><a href="{{ path('catalogue') }}">catalogue</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">dzq</a></li>
+                <li><a href="#">dzq</a></li>
+                <a href="{{ path('contenuPanier') }}" id="btn-nav-shop" class="btn btn-info navbar-btn">
+                    <span class="glyphicon glyphicon-shopping-cart"></span> Accéder à mon panier
+                </a>
+            </ul>
+
         </div>
+    </nav>
+</header>
+<div id="main" class="row">
+    <div class="container-fluid col-md-9">
+        <div class="container-fluid">
+            {% for success_message in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">{{ success_message }}</div>
+            {% endfor %}
+            {% for info_message in app.session.flashbag.get('info') %}
+                <div class="alert alert-info">{{ info_message }}</div>
+            {% endfor %}
+            {% for danger_message in app.session.flashbag.get('danger') %}
+                <div class="alert alert-danger">{{ danger_message }}</div>
+            {% endfor %}
+        </div>
+        <div class="container-fluid">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    <div class="container-fluid col-md-3">
+    <div id="sidebar-right" class="well well-sm">
+        {{ render(controller('sil16VitrineBundle:Default:panierInformation')) }}
+    </div>
     </div>
 </div>
 <footer>
