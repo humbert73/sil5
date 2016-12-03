@@ -1,0 +1,33 @@
+{% extends "sil16VitrineBundle::layout.html.twig" %}
+{% block content %}
+    <h2>Catalogue {{ category }}</h2>
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Trie par catégorie
+            <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            {% for category in categories %}
+                <li><a href="{{ path('catalogueWithCategory', { 'category_id': category.id }) }}">{{ category.getName }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Libelle</th>
+            <th>Stock</th>
+            <th>Prix</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for article in articles %}
+        <tr>
+            <td>{{ article.getLibelle }}</td>
+            <td>{{ article.getStock }}</td>
+            <td>{{ article.getPrice }}€</td>
+            <td><button type="button" class="btn btn-default btn-xs">Ajouter au panier</button></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,19 @@
+sil16_vitrine_homepage:
+    path:     /
+    defaults: { _controller: sil16VitrineBundle:Default:index}
+
+accueil:
+    path:     /accueil/{name}
+    defaults: { _controller: sil16VitrineBundle:Default:index, name:visiteur }
+
+mentions:
+    path:     /mentions
+    defaults: { _controller: sil16VitrineBundle:Default:mentions }
+
+catalogue:
+    path:     /catalogue
+    defaults: { _controller: sil16VitrineBundle:Default:catalogue }
+
+catalogueWithCategory:
+    path:     /catalogue/{category_id}
+    defaults: { _controller: sil16VitrineBundle:Default:articlesByCategory }

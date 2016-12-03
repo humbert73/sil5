@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Super site</title>
+    <link href="{{ asset('bundles/sil16vitrine/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<header>
+</header>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">WebSiteName</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="{{ path('accueil') }}">accueil</a></li>
+            <li><a href="{{ path('mentions') }}">mentions</a></li>
+            <li><a href="{{ path('catalogue') }}">catalogue</a></li>
+        </ul>
+    </div>
+</nav>
+<div id="main" class="row">
+    <div id="sidebar" class="col-sm-2">
+        {#<div class="list-group">#}
+            {#<a href="#" class="list-group-item disabled">First item</a>#}
+            {#<a href="#" class="list-group-item">Second item</a>#}
+            {#<a href="#" class="list-group-item">Third item</a>#}
+        {#</div>#}
+    </div>
+    <div class="col-sm-10">
+        <div class="container-fluid">
+        {% block content %}
+        {% endblock %}
+        </div>
+    </div>
+</div>
+<footer>
+</footer>
+</body>
+</html>

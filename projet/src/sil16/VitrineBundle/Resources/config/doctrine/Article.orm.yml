@@ -1,0 +1,25 @@
+sil16\VitrineBundle\Entity\Article:
+  type: entity
+  table: article
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    libelle:
+      type: string
+    price:
+      type: integer
+    stock:
+      type: integer
+  manyToOne:
+    category:
+      targetEntity: Category
+      inversedBy: articles
+      joinColumn:
+        name: category_id
+        referencedColumnName: id
+#  oneToMany:
+#    ligneDeCommande:
+#      targetEntity: LigneDeCommande
+#      mappedBy: Commande

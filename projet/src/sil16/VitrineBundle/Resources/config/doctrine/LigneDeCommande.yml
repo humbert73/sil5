@@ -1,0 +1,32 @@
+sil16\VitrineBundle\Entity\LigneDeCommande:
+  type: entity
+  table: ligneDeCommande
+  id:
+    commande:
+      associationKey: true
+    article:
+      associationKey: true
+  fields:
+    quantite:
+      type: string
+    price:
+      type: integer
+  manyToOne:
+    commande:
+      targetEntity: Commande
+      inversedBy: lignesDeCommandes
+      joinColumn:
+        name: commande_id
+        referencedColumnName: id
+    article:
+      targetEntity: Article
+      inversedBy: articles
+      joinColumn:
+        name: article_id
+        referencedColumnName: id
+
+#      appartient à une commande, fait référence à un articl
+
+
+
+#      (avec un id, un libellé, un prix, un stock et qui appartient à une catégorie

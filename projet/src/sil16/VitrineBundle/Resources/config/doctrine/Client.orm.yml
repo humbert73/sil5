@@ -1,0 +1,16 @@
+sil16\VitrineBundle\Entity\Client:
+  type: entity
+  table: client
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    nom:
+      type: string
+    mail:
+      type: string
+  oneToMany:
+    commandes:
+      targetEntity: Commande
+      mappedBy: Client
