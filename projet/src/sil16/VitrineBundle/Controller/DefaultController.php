@@ -46,6 +46,14 @@ class DefaultController extends Controller
         );
     }
 
+    public function articlesLesPlusVenduAction()
+    {
+        return $this->render(
+            'sil16VitrineBundle:Default:articlesLesPlusVendu.html.twig',
+            array('articles' => $this->getTopSellingArticles())
+        );
+    }
+
 //    Gestion du Panier
     public function contenuPanierAction()
     {
@@ -179,6 +187,13 @@ class DefaultController extends Controller
             'total_price'     => $total_price,
             'has_contenu'     => !empty($contenue)
         );
+    }
+
+    private function getTopSellingArticles()
+    {
+        $articles = $this->getManagerForEntity('Article')->findAll();
+
+        return array($articles[1], $articles[2], $articles[3]);
     }
 
     private function getCategoryById($category_id)

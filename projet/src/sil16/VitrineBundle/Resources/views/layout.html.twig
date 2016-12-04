@@ -48,9 +48,14 @@
         </div>
     </div>
     <div class="container-fluid col-md-3">
-    <div id="sidebar-right" class="well well-sm">
-        {{ render(controller('sil16VitrineBundle:Default:panierInformation')) }}
-    </div>
+        <div id="sidebar-right">
+            <div class="well well-sm">
+                {{ render(controller('sil16VitrineBundle:Default:panierInformation')) }}
+            </div>
+            <div class="well well-sm">
+                {{ render(controller('sil16VitrineBundle:Default:articlesLesPlusVendu')) }}
+            </div>
+        </div>
     </div>
 </div>
 <footer>

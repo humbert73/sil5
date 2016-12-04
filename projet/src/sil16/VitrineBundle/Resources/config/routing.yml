@@ -18,6 +18,10 @@ catalogueWithCategory:
     path:     /catalogue/{category_id}
     defaults: { _controller: sil16VitrineBundle:Default:articlesByCategory }
 
+articlesLesPlusVendu:
+    path:     /articlesLesPlusVendu
+    defaults: { _controller: sil16VitrineBundle:Default:articlesLesPlusVendu }
+
 #Actions relatif au panier
 contenuPanier:
     path:     /panier
