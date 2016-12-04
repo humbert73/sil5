@@ -23,7 +23,18 @@ class Panier
         return $this->contenu;
     }
 
-    public function ajoutArticle ($article_id, $quantity = 1)
+    public function getQuantityFromArticleId($article_id)
+    {
+        $quantity = 0;
+
+        if (isset($this->contenu[$article_id])) {
+            $quantity = $this->contenu[$article_id];
+        }
+
+        return $quantity;
+    }
+
+    public function ajoutArticle($article_id, $quantity = 1)
     {
         if (isset($this->contenu[$article_id])) {
             $this->contenu[$article_id] += $quantity;
@@ -32,7 +43,8 @@ class Panier
         }
     }
 
-    public function supprimeArticle($article_id) {
+    public function supprimeArticle($article_id)
+    {
         unset($this->contenu[$article_id]);
     }
 

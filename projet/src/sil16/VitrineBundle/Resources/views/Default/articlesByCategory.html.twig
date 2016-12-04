@@ -1,6 +1,6 @@
 {% extends "sil16VitrineBundle::layout.html.twig" %}
 {% block content %}
-    <h2>Catalogue {{ category }}</h2>
+    <h2>Catalogue {{ category.getName }}</h2>
     <div class="dropdown">
         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Trie par catégorie
             <span class="caret"></span></button>
@@ -26,9 +26,17 @@
             <td>{{ article.getStock }}</td>
             <td class="table-data-price">{{ article.getPrice }}€</td>
             <td>
-                <a href="{{ path('addArticle', { 'article_id': article.getId }) }}"
-                   class="btn btn-default btn-xs">
-                    <span class="glyphicon glyphicon-plus"></span> Ajouter au panier</a>
+                <form class="form-inline" action="{{ path('addArticleFromCategory', { 'article_id': article.getId }) }}">
+                    <input class="hidden" name="stock" value="{{ article.getStock }}">
+                    <input class="hidden" name="category_id" value="{{ category.getId }}">
+                    <div class="form-group table-data-form-quantity">
+                        <label>Quantité :</label>
+                        <input name="quantity" id="input-quantity" class="form-control input-sm" type="number" value="1">
+                        <button type="submit" class="btn btn-default btn-xs">
+                            <span class="glyphicon glyphicon-plus"></span> Ajouter au panier
+                        </button>
+                    </div>
+                </form>
             </td>
         </tr>
         {% endfor %}

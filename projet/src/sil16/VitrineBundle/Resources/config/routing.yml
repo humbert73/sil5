@@ -28,7 +28,7 @@ addArticle:
     defaults: { _controller: sil16VitrineBundle:Default:addArticle }
 
 addArticleFromCategory:
-    path:     /addArticle/{article_id}
+    path:     /addArticleFromCategory/{article_id}
     defaults: { _controller: sil16VitrineBundle:Default:addArticleFromCategory }
 
 removeArticleFromPanier:

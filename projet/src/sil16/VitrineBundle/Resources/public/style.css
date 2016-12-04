@@ -7,6 +7,10 @@
     text-align: right;
 }
 
+.table-data-form-quantity {
+    margin-bottom: 0;
+}
+
 #btn-nav-shop {
     margin-right: 8px;
 }
@@ -17,4 +21,10 @@
 
 #main {
     margin-right: 0;
+}
+
+#input-quantity{
+    width: 50px;
+    height: 22px;
+    padding: 1px 10px;
 }

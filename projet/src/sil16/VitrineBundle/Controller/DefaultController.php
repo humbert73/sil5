@@ -3,7 +3,10 @@
 namespace sil16\VitrineBundle\Controller;
 
 use sil16\VitrineBundle\Entity\Panier;
+use sil16\VitrineBundle\Exception\IsNotValidQuantityException;
+use sil16\VitrineBundle\Exception\IsNotValidRequestException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class DefaultController extends Controller
 {
@@ -35,8 +38,8 @@ class DefaultController extends Controller
     {
         return $this->render(
             'sil16VitrineBundle:Default:articlesByCategory.html.twig',
-            $articles = array(
-                'category'   => $this->getCategoryById($category_id)->getName(),
+            array(
+                'category'   => $this->getCategoryById($category_id),
                 'articles'   => $this->getCategoryById($category_id)->getArticles(),
                 'categories' => $this->getManagerForEntity('Category')->findAll()
             )
@@ -63,33 +66,65 @@ class DefaultController extends Controller
 
     public function addArticleAction($article_id)
     {
-        $panier          = $this->getPanier();
-        $article_libelle = $this->getManagerForEntity('Article')->findOneById($article_id)->getLibelle();
-
-        $panier->ajoutArticle($article_id);
-        $this->getSession()->set('panier', $panier);
-        $this->get('session')->getFlashBag()->add(
-            'info',
-            "L'article $article_libelle à été ajouter au panier"
-        );
+        try {
+            $this->addArticle($article_id);
+        } catch (IsNotValidRequestException $exception) {
+            $this->get('session')->getFlashBag()->add(
+                'danger',
+                "La requête n'est pas valide"
+            );
+        } catch (IsNotValidQuantityException $exception) {
+            $this->get('session')->getFlashBag()->add(
+                'danger',
+                "La quantité doit être comprise entre 1 et la limite du stock"
+            );
+        }
 
         return $this->catalogueAction();
     }
 
     public function addArticleFromCategoryAction($article_id)
     {
-        $panier          = $this->getPanier();
-        $article         = $this->getManagerForEntity('Article')->findOneById($article_id);
-        $article_libelle = $article->getLibelle();
+        try {
+            $this->addArticle($article_id);
+        } catch (IsNotValidRequestException $exception) {
+            $this->get('session')->getFlashBag()->add(
+                'danger',
+                "La requête n'est pas valide"
+            );
+        } catch (IsNotValidQuantityException $exception) {
+            $this->get('session')->getFlashBag()->add(
+                'danger',
+                "La quantité doit être supérieur à 1 et dans la limite du stock"
+            );
+        }
 
-        $panier->ajoutArticle($article_id);
+        return $this->articlesByCategoryAction($this->get('request')->get('category_id'));
+    }
+
+    private function addArticle($article_id)
+    {
+        $quantity             = $this->get('request')->get('quantity');
+        $stock                = $this->get('request')->get('stock');
+        $panier               = $this->getPanier();
+        $quantity_from_panier = $panier->getQuantityFromArticleId($article_id);
+        $article              = $this->getManagerForEntity('Article')->findOneById($article_id);
+        $article_libelle      = $article->getLibelle();
+
+        if ($quantity === null || $stock === null) {
+            throw new IsNotValidRequestException();
+        }
+        if ($quantity < 1 || $quantity + $quantity_from_panier > $stock) {
+            throw new IsNotValidQuantityException();
+        }
+
+
+        $panier->ajoutArticle($article_id, $quantity);
         $this->getSession()->set('panier', $panier);
         $this->get('session')->getFlashBag()->add(
             'info',
             "L'article $article_libelle à été ajouter au panier"
         );
-
-        return $this->articlesByCategoryAction($article->getCategory()->getId());
     }
 
     public function removeArticleFromPanierAction($article_id)
@@ -141,8 +176,8 @@ class DefaultController extends Controller
 
         return array(
             'panier_articles' => $panier_articles,
-            'total_price'    => $total_price,
-            'has_contenu'    => !empty($contenue)
+            'total_price'     => $total_price,
+            'has_contenu'     => !empty($contenue)
         );
     }
 
