@@ -1,0 +1,24 @@
+client_index:
+    path:     /
+    defaults: { _controller: "sil16VitrineBundle:Client:index" }
+    methods:  GET
+
+client_show:
+    path:     /{id}/show
+    defaults: { _controller: "sil16VitrineBundle:Client:show" }
+    methods:  GET
+
+client_new:
+    path:     /new
+    defaults: { _controller: "sil16VitrineBundle:Client:new" }
+    methods:  [GET, POST]
+
+client_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "sil16VitrineBundle:Client:edit" }
+    methods:  [GET, POST]
+
+client_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "sil16VitrineBundle:Client:delete" }
+    methods:  DELETE

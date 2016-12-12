@@ -1,0 +1,7 @@
+{% extends "sil16VitrineBundle::siteAdminLayout.html.twig" %}
+{% block content %}
+    <h1>Administration</h1>
+    <a href="{{ path('category_index') }}" class="btn btn-primary">Category Manager</a>
+    <a href="{{ path('article_index') }}" class="btn btn-primary">Article Manager</a>
+    <a href="{{ path('client_index') }}" class="btn btn-primary">Client Manager</a>
+{% endblock %}

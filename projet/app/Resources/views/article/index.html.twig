@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+    <h1>Articles list</h1>
+
+    <a class="btn btn-primary" href="{{ path('article_new') }}">
+        <span class="glyphicon glyphicon-plus"></span> Create a new article</a>
+
+    <table  class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Libelle</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for article in articles %}
+            <tr>
+                <td>{{ article.libelle }}</td>
+                <td>{{ article.category.getName }}</td>
+                <td class="table-data-price">{{ article.price }}€</td>
+                <td>{{ article.stock }}</td>
+                <td class="table-data-actions">
+                    <div>
+                        <a class="btn btn-info btn-xs" href="{{ path('article_show', { 'id': article.id }) }}">
+                            <span class="glyphicon glyphicon-th-list"></span> details</a>
+                    </div>
+                    <div>
+                        <a class="btn btn-primary btn-xs" href="{{ path('article_edit', { 'id': article.id }) }}">
+                            <span class="glyphicon glyphicon-edit"></span> edit</a>
+                    </div>
+                    <div>
+                    {{ form_start(delete_forms[loop.index-1]) }}
+                        <button  class="btn btn-danger btn-xs" type="submit">
+                            <span class="glyphicon glyphicon-remove"></span> Delete
+                        </button>
+                    {{ form_end(delete_forms[loop.index-1]) }}
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+{% endblock %}

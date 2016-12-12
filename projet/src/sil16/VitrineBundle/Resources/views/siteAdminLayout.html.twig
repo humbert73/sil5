@@ -22,14 +22,11 @@
                 <li><a href="{{ path('siteAdmin') }}">Site admin</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ path('client_new') }}"><span class="glyphicon glyphicon-user"></span> S'inscrire</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul>
         </div>
     </nav>
 </header>
-<div id="main" class="row">
-    <div id="articles" class="container-fluid col-md-9">
+    <div id="articles" class="container-fluid">
         <div class="container-fluid">
             {% for success_message in app.session.flashbag.get('success') %}
                 <div class="alert alert-success">{{ success_message }}</div>
@@ -46,17 +43,6 @@
             {% endblock %}
         </div>
     </div>
-    <div class="container-fluid col-md-3">
-        <div id="sidebar-right">
-            <div class="well well-sm">
-                {{ render(controller('sil16VitrineBundle:Default:panierInformation')) }}
-            </div>
-            <div class="well well-sm">
-                {{ render(controller('sil16VitrineBundle:Default:articlesLesPlusVendu')) }}
-            </div>
-        </div>
-    </div>
-</div>
 <footer>
 </footer>
 </body>

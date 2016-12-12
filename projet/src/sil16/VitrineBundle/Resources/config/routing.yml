@@ -1,3 +1,15 @@
+sil16_vitrine_category:
+    resource: "@sil16VitrineBundle/Resources/config/routing/category.yml"
+    prefix:   /category
+
+sil16_vitrine_article:
+        resource: "@sil16VitrineBundle/Resources/config/routing/article.yml"
+        prefix:   /article
+
+sil16_vitrine_client:
+        resource: "@sil16VitrineBundle/Resources/config/routing/client.yml"
+        prefix:   /client
+
 sil16_vitrine_homepage:
     path:     /
     defaults: { _controller: sil16VitrineBundle:Default:index}
@@ -46,3 +58,19 @@ removePanierContent:
 panierInformationAction:
     path:     /panierInformation
     defaults: { _controller: sil16VitrineBundle:Default:panierInformation }
+
+siteAdmin:
+    path:     /siteAdmin
+    defaults: { _controller: sil16VitrineBundle:Admin:siteAdmin }
+
+updateCategory:
+    path:     /siteAdmin/{{ id }}/category
+    defaults: { _controller: sil16VitrineBundle:Admin:Category:update }
+
+deleteCategory:
+    path:     /siteAdmin/{{ id }}/category
+    defaults: { _controller: sil16VitrineBundle:Admin:Category:delete }
+
+addCategory:
+    path:     /siteAdmin/category
+    defaults: { _controller: sil16VitrineBundle:Admin:Category:add }

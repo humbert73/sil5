@@ -201,7 +201,7 @@ class DefaultController extends Controller
         return $this->getManagerForEntity('Category')->findOneById($category_id);
     }
 
-    private function getManagerForEntity($entity_name)
+    protected function getManagerForEntity($entity_name)
     {
         return $this->getDoctrine()->getManager()->getRepository('sil16VitrineBundle:'.$entity_name);
     }
@@ -209,5 +209,10 @@ class DefaultController extends Controller
     private function getSession()
     {
         return $this->getRequest()->getSession();
+    }
+
+    protected function getAll($entity_name)
+    {
+        return $this->getManagerForEntity($entity_name)->findAll();
     }
 }
