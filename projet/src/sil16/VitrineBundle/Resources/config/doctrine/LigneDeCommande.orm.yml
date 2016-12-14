@@ -10,7 +10,8 @@ sil16\VitrineBundle\Entity\LigneDeCommande:
     quantite:
       type: string
     price:
-      type: integer
+      type: decimal
+      scale: 2
   manyToOne:
     commande:
       targetEntity: Commande
@@ -20,13 +21,11 @@ sil16\VitrineBundle\Entity\LigneDeCommande:
         referencedColumnName: id
     article:
       targetEntity: Article
-      inversedBy: articles
+      inversedBy: lignesDeCommandes
       joinColumn:
         name: article_id
         referencedColumnName: id
 
-#      appartient à une commande, fait référence à un articl
-
-
+#      appartient à une commande, fait référence à un article
 
 #      (avec un id, un libellé, un prix, un stock et qui appartient à une catégorie

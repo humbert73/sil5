@@ -37,6 +37,7 @@ class ClientController extends Controller
         $form = $this->createForm('sil16\VitrineBundle\Form\ClientType', $client);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($client);

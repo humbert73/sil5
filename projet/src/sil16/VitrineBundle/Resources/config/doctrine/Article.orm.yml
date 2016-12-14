@@ -1,5 +1,6 @@
 sil16\VitrineBundle\Entity\Article:
   type: entity
+  repositoryClass: sil16\VitrineBundle\Entity\ArticleRepository
   table: article
   id:
     id:
@@ -9,7 +10,8 @@ sil16\VitrineBundle\Entity\Article:
     libelle:
       type: string
     price:
-      type: integer
+      type: decimal
+      scale: 2
     stock:
       type: integer
   manyToOne:

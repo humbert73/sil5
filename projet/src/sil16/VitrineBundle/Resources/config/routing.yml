@@ -55,22 +55,14 @@ removePanierContent:
     path:     /removePanierContent
     defaults: { _controller: sil16VitrineBundle:Default:removePanierContent }
 
-panierInformationAction:
+panierInformation:
     path:     /panierInformation
     defaults: { _controller: sil16VitrineBundle:Default:panierInformation }
+
+validerPanier:
+    path:     /validerPanier
+    defaults: { _controller: sil16VitrineBundle:Default:validerPanier }
 
 siteAdmin:
     path:     /siteAdmin
     defaults: { _controller: sil16VitrineBundle:Admin:siteAdmin }
-
-updateCategory:
-    path:     /siteAdmin/{{ id }}/category
-    defaults: { _controller: sil16VitrineBundle:Admin:Category:update }
-
-deleteCategory:
-    path:     /siteAdmin/{{ id }}/category
-    defaults: { _controller: sil16VitrineBundle:Admin:Category:delete }
-
-addCategory:
-    path:     /siteAdmin/category
-    defaults: { _controller: sil16VitrineBundle:Admin:Category:add }

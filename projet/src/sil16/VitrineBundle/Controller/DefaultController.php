@@ -2,11 +2,17 @@
 
 namespace sil16\VitrineBundle\Controller;
 
+use DateTime;
+use sil16\VitrineBundle\Entity\Article;
+use sil16\VitrineBundle\Entity\Client;
+use sil16\VitrineBundle\Entity\Commande;
+use sil16\VitrineBundle\Entity\LigneDeCommande;
 use sil16\VitrineBundle\Entity\Panier;
 use sil16\VitrineBundle\Exception\IsNotValidQuantityException;
 use sil16\VitrineBundle\Exception\IsNotValidRequestException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
@@ -162,12 +168,57 @@ class DefaultController extends Controller
         );
     }
 
+    public function validerPanierAction(Request $request)
+    {
+        $panier   = $this->getPanier();
+        $em       = $this->getDoctrine()->getManager();
+        $client   = $this->getManagerForEntity('Client')->findOneById($request->getSession()->get('client_id'));
+        $commande = $this->buildCommande($em, $client);
+
+        foreach ($panier->getContenu() as $article_id => $quantity) {
+            $article = $this->getManagerForEntity('Article')->findOneById($article_id);
+            $commande->addLigneDeCommande($this->buildLigneDeCommande($em, $article, $quantity, $commande));
+        }
+        $em->flush($commande);
+        $this->getPanier()->viderPanier();
+        $request->getSession()->getFlashBag()->add('success', 'Panier validé avec succès');
+
+        return $this->catalogueAction($request);
+    }
+
+    private function buildCommande($em, Client $client)
+    {
+        $commande = new Commande();
+
+        $commande->setClient($client);
+        $commande->setDate(new DateTime());
+        $commande->setEtat(0);
+        $em->persist($commande);
+        $em->flush($commande);
+
+        return $commande;
+    }
+
+    private function buildLigneDeCommande($em, Article $article, $quantity, Commande $commande)
+    {
+        $ligne_de_commande = new LigneDeCommande();
+
+        $ligne_de_commande->setArticle($article);
+        $ligne_de_commande->setPrice($article->getPrice() * $quantity);
+        $ligne_de_commande->setQuantite($quantity);
+        $ligne_de_commande->setCommande($commande);
+        $em->persist($ligne_de_commande);
+        $em->flush($ligne_de_commande);
+
+        return $ligne_de_commande;
+    }
+
 //    Méthodes du controller
     private function getPanier()
     {
         $session = $this->getSession();
 
-        return $session->get('panier', new Panier());;
+        return $session->get('panier', new Panier());
     }
 
     private function getPanierInformation()
