@@ -29,7 +29,6 @@ class LigneDeCommande
      */
     private $article;
 
-
     /**
      * Set quantite
      *

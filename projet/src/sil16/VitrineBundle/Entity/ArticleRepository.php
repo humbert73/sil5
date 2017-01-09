@@ -12,5 +12,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
+    public function getTopSellingArticles()
+    {
+        $top_articles = $this->getEntityManager()
+            ->createQuery(
+                'SELECT article, SUM(ligneDeCommande.quantite) as quantite_article
+                FROM sil16VitrineBundle:LigneDeCommande ligneDeCommande, sil16VitrineBundle:Article article
+                WHERE article.id = ligneDeCommande.article
+                GROUP BY article.id
+                ORDER BY quantite_article DESC'
+            )
+            ->setMaxResults(7)
+            ->getResult();
 
+        foreach ($top_articles as $id => $article_and_quantity) {
+            $top_articles[$id] = $article_and_quantity[0];
+        }
+
+        return $top_articles;
+    }
 }

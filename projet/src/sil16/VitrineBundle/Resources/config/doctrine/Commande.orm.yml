@@ -17,9 +17,9 @@ sil16\VitrineBundle\Entity\Commande:
       joinColumn:
         name: client_id
         referencedColumnName: id
-#  oneToMany:
-#    ligneDeCommandes:
-#      targetEntity: LigneDeCommande
-#      mappedBy: Commande
+  oneToMany:
+    lignesDeCommandes:
+      targetEntity: LigneDeCommande
+      mappedBy: Commande
 
 #      (avec un id, un libellé, un prix, un stock et qui appartient à une catégorie

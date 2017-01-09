@@ -44,7 +44,7 @@ class ClientController extends Controller
             $em->flush($client);
             $request->getSession()->set('client_id', $client->getId());
 
-            return $this->redirectToRoute('client_show', array('id' => $client->getId()));
+            return $this->redirectToRoute('catalogue');
         }
 
         return $this->render('client/new.html.twig', array(
@@ -122,5 +122,10 @@ class ClientController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    public function loginAction()
+    {
+        return $this->render('sil16VitrineBundle:Default:login.html.twig');
     }
 }

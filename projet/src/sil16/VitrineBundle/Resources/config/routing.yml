@@ -37,32 +37,37 @@ articlesLesPlusVendu:
 #Actions relatif au panier
 contenuPanier:
     path:     /panier
-    defaults: { _controller: sil16VitrineBundle:Default:contenuPanier }
+    defaults: { _controller: sil16VitrineBundle:Panier:contenuPanier }
 
 addArticle:
     path:     /addArticle/{article_id}
-    defaults: { _controller: sil16VitrineBundle:Default:addArticle }
+    defaults: { _controller: sil16VitrineBundle:Panier:addArticle }
 
 addArticleFromCategory:
     path:     /addArticleFromCategory/{article_id}
-    defaults: { _controller: sil16VitrineBundle:Default:addArticleFromCategory }
+    defaults: { _controller: sil16VitrineBundle:Panier:addArticleFromCategory }
 
 removeArticleFromPanier:
     path:     /removeArticleFromPanier/{article_id}
-    defaults: { _controller: sil16VitrineBundle:Default:removeArticleFromPanier }
+    defaults: { _controller: sil16VitrineBundle:Panier:removeArticleFromPanier }
 
 removePanierContent:
     path:     /removePanierContent
-    defaults: { _controller: sil16VitrineBundle:Default:removePanierContent }
+    defaults: { _controller: sil16VitrineBundle:Panier:removePanierContent }
 
 panierInformation:
     path:     /panierInformation
-    defaults: { _controller: sil16VitrineBundle:Default:panierInformation }
+    defaults: { _controller: sil16VitrineBundle:Panier:panierInformation }
 
 validerPanier:
     path:     /validerPanier
-    defaults: { _controller: sil16VitrineBundle:Default:validerPanier }
+    defaults: { _controller: sil16VitrineBundle:Panier:validerPanier }
 
+#Spécial compte :
 siteAdmin:
     path:     /siteAdmin
     defaults: { _controller: sil16VitrineBundle:Admin:siteAdmin }
+
+login:
+    path:     /login
+    defaults: { _controller: sil16VitrineBundle:Client:login }

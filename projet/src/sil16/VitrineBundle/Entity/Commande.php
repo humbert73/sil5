@@ -196,4 +196,42 @@ class Commande
     {
         return $this->ligneDeCommandes;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $lignesDeCommandes;
+
+
+    /**
+     * Add lignesDeCommandes
+     *
+     * @param \sil16\VitrineBundle\Entity\LigneDeCommande $lignesDeCommandes
+     * @return Commande
+     */
+    public function addLignesDeCommande(\sil16\VitrineBundle\Entity\LigneDeCommande $lignesDeCommandes)
+    {
+        $this->lignesDeCommandes[] = $lignesDeCommandes;
+
+        return $this;
+    }
+
+    /**
+     * Remove lignesDeCommandes
+     *
+     * @param \sil16\VitrineBundle\Entity\LigneDeCommande $lignesDeCommandes
+     */
+    public function removeLignesDeCommande(\sil16\VitrineBundle\Entity\LigneDeCommande $lignesDeCommandes)
+    {
+        $this->lignesDeCommandes->removeElement($lignesDeCommandes);
+    }
+
+    /**
+     * Get lignesDeCommandes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLignesDeCommandes()
+    {
+        return $this->lignesDeCommandes;
+    }
 }

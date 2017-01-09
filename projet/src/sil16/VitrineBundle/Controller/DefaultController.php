@@ -3,6 +3,8 @@
 namespace sil16\VitrineBundle\Controller;
 
 use DateTime;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManager;
 use sil16\VitrineBundle\Entity\Article;
 use sil16\VitrineBundle\Entity\Client;
 use sil16\VitrineBundle\Entity\Commande;
@@ -56,172 +58,20 @@ class DefaultController extends Controller
     {
         return $this->render(
             'sil16VitrineBundle:Default:articlesLesPlusVendu.html.twig',
-            array('articles' => $this->getTopSellingArticles())
+            array('articles' => $this->getManagerForEntity('Article')->getTopSellingArticles())
         );
     }
 
-//    Gestion du Panier
-    public function contenuPanierAction()
-    {
-        $panier            = $this->getPanier();
-        $total_price       = 0;
-        $articles_renderer = array();
-        foreach ($panier->getContenu() as $article_id => $quantity) {
-            $article             = $this->getManagerForEntity('Article')->findOneById($article_id);
-            $articles_renderer[] = array('article' => $article, 'quantity' => $quantity);
-            $total_price += $article->getPrice() * $quantity;
-        }
-
-        return $this->render(
-            'sil16VitrineBundle:Default:contenuPanier.html.twig',
-            array('panier_information' => $this->getPanierInformation())
-        );
-    }
-
-    public function addArticleAction($article_id)
-    {
-        try {
-            $this->addArticle($article_id);
-        } catch (IsNotValidRequestException $exception) {
-            $this->get('session')->getFlashBag()->add(
-                'danger',
-                "La requête n'est pas valide"
-            );
-        } catch (IsNotValidQuantityException $exception) {
-            $this->get('session')->getFlashBag()->add(
-                'danger',
-                "La quantité doit être comprise entre 1 et la limite du stock"
-            );
-        }
-
-        return $this->catalogueAction();
-    }
-
-    public function addArticleFromCategoryAction($article_id)
-    {
-        try {
-            $this->addArticle($article_id);
-        } catch (IsNotValidRequestException $exception) {
-            $this->get('session')->getFlashBag()->add(
-                'danger',
-                "La requête n'est pas valide"
-            );
-        } catch (IsNotValidQuantityException $exception) {
-            $this->get('session')->getFlashBag()->add(
-                'danger',
-                "La quantité doit être supérieur à 1 et dans la limite du stock"
-            );
-        }
-
-        return $this->articlesByCategoryAction($this->get('request')->get('category_id'));
-    }
-
-    private function addArticle($article_id)
-    {
-        $quantity             = $this->get('request')->get('quantity');
-        $stock                = $this->get('request')->get('stock');
-        $panier               = $this->getPanier();
-        $quantity_from_panier = $panier->getQuantityFromArticleId($article_id);
-        $article              = $this->getManagerForEntity('Article')->findOneById($article_id);
-        $article_libelle      = $article->getLibelle();
-
-        if ($quantity === null || $stock === null) {
-            throw new IsNotValidRequestException();
-        }
-        if ($quantity < 1 || $quantity + $quantity_from_panier > $stock) {
-            throw new IsNotValidQuantityException();
-        }
-
-
-        $panier->ajoutArticle($article_id, $quantity);
-        $this->getSession()->set('panier', $panier);
-        $this->get('session')->getFlashBag()->add(
-            'info',
-            "L'article $article_libelle à été ajouter au panier"
-        );
-    }
-
-    public function removeArticleFromPanierAction($article_id)
-    {
-        $this->getPanier()->supprimeArticle($article_id);
-        $article_libelle = $this->getManagerForEntity('Article')->findOneById($article_id)->getLibelle();
-        $this->get('session')->getFlashBag()->add(
-            'success',
-            "L'article $article_libelle à été retirer du panier avec succès");
-
-        return $this->contenuPanierAction();
-    }
-
-    public function removePanierContentAction()
-    {
-        $this->getPanier()->viderPanier();
-        $this->get('session')->getFlashBag()->add('success', 'Panier vider avec succès');
-
-        return $this->contenuPanierAction();
-    }
-
-    public function panierInformationAction()
-    {
-        return $this->render(
-            'sil16VitrineBundle:Default:panierInformation.html.twig',
-            array('panier_information' => $this->getPanierInformation())
-        );
-    }
-
-    public function validerPanierAction(Request $request)
-    {
-        $panier   = $this->getPanier();
-        $em       = $this->getDoctrine()->getManager();
-        $client   = $this->getManagerForEntity('Client')->findOneById($request->getSession()->get('client_id'));
-        $commande = $this->buildCommande($em, $client);
-
-        foreach ($panier->getContenu() as $article_id => $quantity) {
-            $article = $this->getManagerForEntity('Article')->findOneById($article_id);
-            $commande->addLigneDeCommande($this->buildLigneDeCommande($em, $article, $quantity, $commande));
-        }
-        $em->flush($commande);
-        $this->getPanier()->viderPanier();
-        $request->getSession()->getFlashBag()->add('success', 'Panier validé avec succès');
-
-        return $this->catalogueAction($request);
-    }
-
-    private function buildCommande($em, Client $client)
-    {
-        $commande = new Commande();
-
-        $commande->setClient($client);
-        $commande->setDate(new DateTime());
-        $commande->setEtat(0);
-        $em->persist($commande);
-        $em->flush($commande);
-
-        return $commande;
-    }
-
-    private function buildLigneDeCommande($em, Article $article, $quantity, Commande $commande)
-    {
-        $ligne_de_commande = new LigneDeCommande();
-
-        $ligne_de_commande->setArticle($article);
-        $ligne_de_commande->setPrice($article->getPrice() * $quantity);
-        $ligne_de_commande->setQuantite($quantity);
-        $ligne_de_commande->setCommande($commande);
-        $em->persist($ligne_de_commande);
-        $em->flush($ligne_de_commande);
-
-        return $ligne_de_commande;
-    }
 
 //    Méthodes du controller
-    private function getPanier()
+    protected function getPanier()
     {
         $session = $this->getSession();
 
         return $session->get('panier', new Panier());
     }
 
-    private function getPanierInformation()
+    protected function getPanierInformation()
     {
         $panier_articles = array();
         $total_price     = 0;
@@ -238,13 +88,6 @@ class DefaultController extends Controller
             'total_price'     => $total_price,
             'has_contenu'     => !empty($contenue)
         );
-    }
-
-    private function getTopSellingArticles()
-    {
-        $articles = $this->getManagerForEntity('Article')->findAll();
-
-        return array($articles[1], $articles[2], $articles[3]);
     }
 
     private function getCategoryById($category_id)
