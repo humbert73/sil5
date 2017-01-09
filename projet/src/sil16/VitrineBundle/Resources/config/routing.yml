@@ -3,12 +3,17 @@ sil16_vitrine_category:
     prefix:   /category
 
 sil16_vitrine_article:
-        resource: "@sil16VitrineBundle/Resources/config/routing/article.yml"
-        prefix:   /article
+    resource: "@sil16VitrineBundle/Resources/config/routing/article.yml"
+    prefix:   /article
 
 sil16_vitrine_client:
-        resource: "@sil16VitrineBundle/Resources/config/routing/client.yml"
-        prefix:   /client
+    resource: "@sil16VitrineBundle/Resources/config/routing/client.yml"
+    prefix:   /client
+
+sil16_vitrine_commande:
+    resource: "@sil16VitrineBundle/Resources/config/routing/commande.yml"
+    prefix:   /commande
+
 
 sil16_vitrine_homepage:
     path:     /

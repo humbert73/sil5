@@ -3,7 +3,10 @@
 namespace sil16\VitrineBundle\Controller;
 
 use sil16\VitrineBundle\Entity\Client;
+use sil16\VitrineBundle\Form\ClientType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -34,9 +37,8 @@ class ClientController extends Controller
     public function newAction(Request $request)
     {
         $client = new Client();
-        $form = $this->createForm('sil16\VitrineBundle\Form\ClientType', $client);
+        $form = $this->createForm(new ClientType(), $client);
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();

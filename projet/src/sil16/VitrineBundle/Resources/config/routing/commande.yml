@@ -1,0 +1,24 @@
+commande_index:
+    path:     /
+    defaults: { _controller: "sil16VitrineBundle:Commande:index" }
+    methods:  GET
+
+commande_show:
+    path:     /{id}/show
+    defaults: { _controller: "sil16VitrineBundle:Commande:show" }
+    methods:  GET
+
+commande_new:
+    path:     /new
+    defaults: { _controller: "sil16VitrineBundle:Commande:new" }
+    methods:  [GET, POST]
+
+commande_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "sil16VitrineBundle:Commande:edit" }
+    methods:  [GET, POST]
+
+commande_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "sil16VitrineBundle:Commande:delete" }
+    methods:  DELETE

@@ -3,20 +3,17 @@
 namespace sil16\VitrineBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ClientType extends AbstractType
+class CommandeType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom', null, array('label' => 'Nom'));
-        $builder->add('mail', null, array('label' => 'Adresse email'));
-//        $builder->add('save', SubmitType::class, array('label' => 'Confirmer l\'inscription'));
+        $builder->add('date')->add('etat')->add('client');
     }
     
     /**
@@ -25,7 +22,7 @@ class ClientType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'sil16\VitrineBundle\Entity\Client'
+            'data_class' => 'sil16\VitrineBundle\Entity\Commande'
         ));
     }
 
@@ -34,7 +31,7 @@ class ClientType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'sil16_vitrinebundle_client';
+        return 'sil16_vitrinebundle_commande';
     }
 
 

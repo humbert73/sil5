@@ -1,0 +1,9 @@
+# silXX/VitrineBundle/Resources/config/validation.yml
+sil16\VitrineBundle\Entity\Client:
+  properties:
+  nom:
+    - NotBlank: ~
+    - Type: \TextType
+  mail:
+    - NotBlank: ~
+    - Type: \EmailType
