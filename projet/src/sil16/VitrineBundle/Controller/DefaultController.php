@@ -18,11 +18,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
-    public function indexAction($name)
+    public function indexAction(Request $request, $name)
     {
         return $this->render(
             'sil16VitrineBundle:Default:index.html.twig',
-            array('name' => $name)
+            array('name' => $name, 'client_id' => $request->getSession()->get('client_id'))
         );
     }
 

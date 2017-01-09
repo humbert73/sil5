@@ -16,15 +16,19 @@ class CommandeController extends Controller
      * Lists all commande entities.
      *
      */
-    public function indexAction()
+    public function indexAction($client_id)
     {
         $em = $this->getDoctrine()->getManager();
+        if (! $client_id) {
+            $commandes = $em->getRepository('sil16VitrineBundle:Commande')->findAll();
+            $renderer = $this->render('commande/index.html.twig', array('commandes' => $commandes));
+        } else {
+            $client = $em->getRepository('sil16VitrineBundle:Client')->findOneById($client_id);
+            $commandes = $em->getRepository('sil16VitrineBundle:Commande')->findBy(array('client' => $client));
+            $renderer = $this->render('commande/indexClient.html.twig', array('commandes' => $commandes));
+        }
 
-        $commandes = $em->getRepository('sil16VitrineBundle:Commande')->findAll();
-
-        return $this->render('commande/index.html.twig', array(
-            'commandes' => $commandes,
-        ));
+        return $renderer;
     }
 
     /**

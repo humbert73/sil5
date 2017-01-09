@@ -1,6 +1,6 @@
 commande_index:
-    path:     /
-    defaults: { _controller: "sil16VitrineBundle:Commande:index" }
+    path:     /{client_id}
+    defaults: { _controller: "sil16VitrineBundle:Commande:index", client_id:null }
     methods:  GET
 
 commande_show:
