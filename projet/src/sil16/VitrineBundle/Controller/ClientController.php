@@ -42,6 +42,9 @@ class ClientController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $encoder = $this->container->get('security.password_encoder');
+            $encoded = $encoder->encodePassword($client, $client->getPassword());
+            $client->setPassword($encoded);
             $em->persist($client);
             $em->flush($client);
             $request->getSession()->set('client_id', $client->getId());
@@ -53,6 +56,16 @@ class ClientController extends Controller
             'client' => $client,
             'form' => $form->createView(),
         ));
+//        if ($form->isValid()) {
+//            $em      = $this->getDoctrine()->getManager();
+//            $encoder = $this->container->get('security.password_encoder');
+//            $encoded = $encoder->encodePassword($entity, $entity->getPassword());
+//            $entity->setPassword($encoded);
+//            $em->persist($entity);
+//            $em->flush();
+//
+//            return null;
+//        }
     }
 
     /**

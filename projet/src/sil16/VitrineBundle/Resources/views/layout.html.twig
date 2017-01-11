@@ -37,6 +37,9 @@
             {% for info_message in app.session.flashbag.get('info') %}
                 <div class="alert alert-info">{{ info_message }}</div>
             {% endfor %}
+            {% for warning_message in app.session.flashbag.get('warning') %}
+                <div class="alert alert-warning">{{ warning_message }}</div>
+            {% endfor %}
             {% for danger_message in app.session.flashbag.get('danger') %}
                 <div class="alert alert-danger">{{ danger_message }}</div>
             {% endfor %}

@@ -19,7 +19,9 @@
             <ul class="nav navbar-nav">
                 <li><a href="{{ path('mentions') }}">mentions</a></li>
                 <li><a href="{{ path('catalogue') }}">catalogue</a></li>
-                <li><a href="{{ path('siteAdmin') }}">Site admin</a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="{{ path('siteAdmin') }}">Site admin</a></li>
+                {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
             </ul>

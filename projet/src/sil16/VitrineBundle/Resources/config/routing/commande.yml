@@ -22,3 +22,8 @@ commande_delete:
     path:     /{id}/delete
     defaults: { _controller: "sil16VitrineBundle:Commande:delete" }
     methods:  DELETE
+
+commande_indexClient:
+    path:     /{client_id}/listCommande
+    defaults: { _controller: "sil16VitrineBundle:Commande:indexClient", client_id:-1 }
+    methods:  GET

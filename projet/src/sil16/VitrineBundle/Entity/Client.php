@@ -3,11 +3,13 @@
 namespace sil16\VitrineBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Serializable;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Client
  */
-class Client
+class Client implements UserInterface, Serializable
 {
     /**
      * @var integer
@@ -23,6 +25,11 @@ class Client
      * @var string
      */
     private $mail;
+
+    /**
+     * @var string
+     */
+    private $password;
 
 
     /**
@@ -126,8 +133,58 @@ class Client
         return $this->commandes;
     }
 
+    public function getRoles()
+    {
+        if ($this->isAdministrateur())
+            return array('ROLE_ADMIN');
+        else {
+            return array('ROLE_USER');
+        }
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getUsername()
+    {
+        return $this->getMail();
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function eraseCredentials(){}
+
+    public function serialize()
+    {
+        return serialize(array($this->id));
+    }
+
+    public function unserialize($serialized)
+    {
+        list ($this->id) = unserialize($serialized);
+    }
+
     public function __toString()
     {
         return $this->nom;
+    }
+
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return Client
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
     }
 }

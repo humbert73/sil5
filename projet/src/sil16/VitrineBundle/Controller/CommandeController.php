@@ -16,19 +16,12 @@ class CommandeController extends Controller
      * Lists all commande entities.
      *
      */
-    public function indexAction($client_id)
+    public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        if (! $client_id) {
-            $commandes = $em->getRepository('sil16VitrineBundle:Commande')->findAll();
-            $renderer = $this->render('commande/index.html.twig', array('commandes' => $commandes));
-        } else {
-            $client = $em->getRepository('sil16VitrineBundle:Client')->findOneById($client_id);
-            $commandes = $em->getRepository('sil16VitrineBundle:Commande')->findBy(array('client' => $client));
-            $renderer = $this->render('commande/indexClient.html.twig', array('commandes' => $commandes));
-        }
+        $em        = $this->getDoctrine()->getManager();
+        $commandes = $em->getRepository('sil16VitrineBundle:Commande')->findAll();
 
-        return $renderer;
+        return $this->render('commande/index.html.twig', array('commandes' => $commandes));
     }
 
     /**
@@ -124,5 +117,21 @@ class CommandeController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    public function indexClientAction(Request $request, $client_id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if ($client_id != -1) {
+            $client = $em->getRepository('sil16VitrineBundle:Client')->findOneById($client_id);
+            $commandes = $em->getRepository('sil16VitrineBundle:Commande')->findBy(array('client' => $client));
+
+            return $this->render('commande/indexClient.html.twig', array('commandes' => $commandes, 'client_id' => $client_id));
+        } else {
+            $request->getSession()->getFlashBag()->add('warning','Vous n\'avez aucune commande pour le moment');
+
+            return $this->redirect($this->generateUrl('accueil'));
+        }
     }
 }

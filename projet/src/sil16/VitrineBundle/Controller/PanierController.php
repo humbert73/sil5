@@ -20,7 +20,7 @@ class PanierController extends DefaultController
 {
     public function contenuPanierAction(Request $request)
     {
-        $panier            = $this->getPanier();
+        $panier            = $this->getPanier($request);
         $total_price       = 0;
         $articles_renderer = array();
         foreach ($panier->getContenu() as $article_id => $quantity) {
@@ -31,7 +31,7 @@ class PanierController extends DefaultController
 
         return $this->render(
             'sil16VitrineBundle:Default:contenuPanier.html.twig',
-            array('panier_information' => $this->getPanierInformation())
+            array('panier_information' => $this->getPanierInformation($request))
         );
     }
 
@@ -77,7 +77,7 @@ class PanierController extends DefaultController
     {
         $quantity             = $request->get('quantity');
         $stock                = $request->get('stock');
-        $panier               = $this->getPanier();
+        $panier               = $this->getPanier($request);
         $quantity_from_panier = $panier->getQuantityFromArticleId($article_id);
         $article              = $this->getManagerForEntity('Article')->findOneById($article_id);
         $article_libelle      = $article->getLibelle();
@@ -99,7 +99,7 @@ class PanierController extends DefaultController
 
     public function removeArticleFromPanierAction(Request $request, $article_id)
     {
-        $this->getPanier()->supprimeArticle($article_id);
+        $this->getPanier($request)->supprimeArticle($article_id);
         $article_libelle = $this->getManagerForEntity('Article')->findOneById($article_id)->getLibelle();
         $this->get('session')->getFlashBag()->add(
             'success',
@@ -110,23 +110,23 @@ class PanierController extends DefaultController
 
     public function removePanierContentAction(Request $request)
     {
-        $this->getPanier()->viderPanier();
+        $this->getPanier($request)->viderPanier();
         $this->get('session')->getFlashBag()->add('success', 'Panier vider avec succès');
 
         return $this->contenuPanierAction($request);
     }
 
-    public function panierInformationAction()
+    public function panierInformationAction(Request $request)
     {
         return $this->render(
             'sil16VitrineBundle:Default:panierInformation.html.twig',
-            array('panier_information' => $this->getPanierInformation())
+            array('panier_information' => $this->getPanierInformation($request))
         );
     }
 
     public function validerPanierAction(Request $request)
     {
-        $panier = $this->getPanier();
+        $panier = $this->getPanier($request);
         $em     = $this->getDoctrine()->getManager();
         if (!$request->getSession()->get('client_id')) {
             $request->getSession()->getFlashBag()->add('danger', 'Vous devez être connecté pour valider une commande');
@@ -141,7 +141,7 @@ class PanierController extends DefaultController
                 $commande->addLigneDeCommande($this->buildLigneDeCommande($em, $article, $quantity, $commande));
             }
             $em->flush($commande);
-            $this->getPanier()->viderPanier();
+            $this->getPanier($request)->viderPanier();
             $request->getSession()->getFlashBag()->add('success', 'Panier validé avec succès');
         }
 

@@ -64,18 +64,16 @@ class DefaultController extends Controller
 
 
 //    Méthodes du controller
-    protected function getPanier()
+    protected function getPanier(Request $request)
     {
-        $session = $this->getSession();
-
-        return $session->get('panier', new Panier());
+        return $request->getSession()->get('panier', new Panier());
     }
 
-    protected function getPanierInformation()
+    protected function getPanierInformation(Request $request)
     {
         $panier_articles = array();
         $total_price     = 0;
-        $contenue        = $this->getPanier()->getContenu();
+        $contenue        = $this->getPanier($request)->getContenu();
 
         foreach ($contenue as $article_id => $quantity) {
             $article           = $this->getManagerForEntity('Article')->findOneById($article_id);
@@ -98,11 +96,6 @@ class DefaultController extends Controller
     protected function getManagerForEntity($entity_name)
     {
         return $this->getDoctrine()->getManager()->getRepository('sil16VitrineBundle:'.$entity_name);
-    }
-
-    private function getSession()
-    {
-        return $this->getRequest()->getSession();
     }
 
     protected function getAll($entity_name)
