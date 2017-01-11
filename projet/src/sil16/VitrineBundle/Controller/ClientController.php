@@ -25,8 +25,14 @@ class ClientController extends Controller
 
         $clients = $em->getRepository('sil16VitrineBundle:Client')->findAll();
 
+        foreach ($clients as $client) {
+            $deleteForm = $this->createDeleteForm($client);
+            $forms[]    = $deleteForm->createView();
+        }
+
         return $this->render('client/index.html.twig', array(
             'clients' => $clients,
+            'delete_forms' => $forms
         ));
     }
 
@@ -39,9 +45,9 @@ class ClientController extends Controller
         $client = new Client();
         $form = $this->createForm(new ClientType(), $client);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
             $encoder = $this->container->get('security.password_encoder');
             $encoded = $encoder->encodePassword($client, $client->getPassword());
             $client->setPassword($encoded);
@@ -56,16 +62,6 @@ class ClientController extends Controller
             'client' => $client,
             'form' => $form->createView(),
         ));
-//        if ($form->isValid()) {
-//            $em      = $this->getDoctrine()->getManager();
-//            $encoder = $this->container->get('security.password_encoder');
-//            $encoded = $encoder->encodePassword($entity, $entity->getPassword());
-//            $entity->setPassword($encoded);
-//            $em->persist($entity);
-//            $em->flush();
-//
-//            return null;
-//        }
     }
 
     /**
@@ -139,8 +135,8 @@ class ClientController extends Controller
         ;
     }
 
-    public function loginAction()
-    {
-        return $this->render('sil16VitrineBundle:Default:login.html.twig');
-    }
+//    public function loginAction() {
+//        die;
+//        return $this->render('sil16VitrineBundle:Default:login.html.twig');
+//    }
 }

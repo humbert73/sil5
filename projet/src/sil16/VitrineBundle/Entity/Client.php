@@ -187,4 +187,13 @@ class Client implements UserInterface, Serializable
 
         return $this;
     }
+
+    private function isAdministrateur()
+    {
+        if ($this->getMail() === "moreaux@mail.com") {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

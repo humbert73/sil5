@@ -4,12 +4,13 @@
     {% if error %}
         <div class="alert alert-danger">{{ error.message }}</div>
     {% endif %}
+    <h1>Connexion</h1>
 
     <form class="form-horizontal" action="{{ path('login_check') }}" method="post">
         <div class="form-group">
-            <label class="control-label col-sm-2" for="username">Login :</label>
+            <label class="control-label col-sm-2" for="username">Adresse email :</label>
             <div class="col-sm-4">
-                <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required/>
+                <input class="form-control" type="email" id="username" name="_username" value="{{ last_username }}" required/>
             </div>
         </div>
         <div class="form-group">
@@ -18,9 +19,7 @@
                 <input class="form-control" type="password" id="password" name="_password" required/>
             </div>
         </div>
-        {# Pour controler l'URL vers laquelle l'utilisateur est redirigé en cas de succès
-            <input type="hidden" name="_target_path" value="/monCompte" />
-        #}
+        <input type="hidden" name="_target_path" value="/" />
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-default">login</button>

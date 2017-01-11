@@ -1,19 +1,25 @@
 {% extends 'sil16VitrineBundle::layout.html.twig' %}
 
 {% block content %}
-    <h1>Category creation</h1>
+    <h1>Client creation</h1>
 
-    {{ form_start(form) }}
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
         <div class="form-group">
             <label class="control-label col-sm-2" for="nom">{{ form_label(form.nom) }}</label>
-            <div class="col-sm-10">
+            <div class="col-sm-4">
                 {{ form_widget(form.nom, { 'attr': {'class': 'form-control', 'id': 'nom'} }) }}
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="mail">{{ form_label(form.mail) }}</label>
-            <div class="col-sm-10">
+            <div class="col-sm-4">
                 {{ form_widget(form.mail, { 'attr': {'class': 'form-control', 'id': 'mail'} }) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="password">{{ form_label(form.password) }}</label>
+            <div class="col-sm-4">
+                {{ form_widget(form.password, { 'attr': {'class': 'form-control', 'id': 'password'} }) }}
             </div>
         </div>
         <div class="form-group">

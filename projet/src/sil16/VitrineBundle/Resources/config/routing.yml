@@ -72,7 +72,3 @@ validerPanier:
 siteAdmin:
     path:     /siteAdmin
     defaults: { _controller: sil16VitrineBundle:Admin:siteAdmin }
-
-login:
-    path:     /login
-    defaults: { _controller: sil16VitrineBundle:Client:login }

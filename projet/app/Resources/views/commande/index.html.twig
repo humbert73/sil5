@@ -1,41 +1,46 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
-    <h1>Commandes list</h1>
+    <div class="container-fluid">
+        <h1>Commandes list</h1>
 
-    <table>
-        <thead>
+        <a class="btn btn-primary" href="{{ path('client_new') }}">
+            <span class="glyphicon glyphicon-plus"></span> Create a new client</a>
+
+        <table  class="table table-striped table-hover">
+            <thead>
             <tr>
                 <th>Id</th>
                 <th>Date</th>
                 <th>Etat</th>
                 <th>Actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for commande in commandes %}
-            <tr>
-                <td><a href="{{ path('commande_show', { 'id': commande.id }) }}">{{ commande.id }}</a></td>
-                <td>{% if commande.date %}{{ commande.date|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if commande.etat %}Yes{% else %}No{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('commande_show', { 'id': commande.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('commande_edit', { 'id': commande.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('commande_new') }}">Create a new commande</a>
-        </li>
-    </ul>
+            </thead>
+            <tbody>
+            {% for commande in commandes %}
+                <tr>
+                    <td><a href="{{ path('commande_show', { 'id': commande.id }) }}">{{ commande.id }}</a></td>
+                    <td>{% if commande.date %}{{ commande.date|date('Y-m-d') }}{% endif %}</td>
+                    <td>{% if commande.etat %}Yes{% else %}No{% endif %}</td>
+                    <td class="table-data-actions">
+                        <div>
+                            <a class="btn btn-info btn-xs" href="{{ path('commande_show', { 'id': commande.id }) }}">
+                                <span class="glyphicon glyphicon-th-list"></span> details</a>
+                        </div>
+                        <div>
+                            <a class="btn btn-primary btn-xs" href="{{ path('commande_edit', { 'id': commande.id }) }}">
+                                <span class="glyphicon glyphicon-edit"></span> edit</a>
+                        </div>
+                        <div>
+                            {{ form_start(delete_forms[loop.index-1]) }}
+                            <button  class="btn btn-danger btn-xs" type="submit">
+                                <span class="glyphicon glyphicon-remove"></span> Delete
+                            </button>
+                            {{ form_end(delete_forms[loop.index-1]) }}
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

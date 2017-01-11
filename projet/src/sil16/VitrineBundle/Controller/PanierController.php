@@ -128,12 +128,17 @@ class PanierController extends DefaultController
     {
         $panier = $this->getPanier($request);
         $em     = $this->getDoctrine()->getManager();
-        if (!$request->getSession()->get('client_id')) {
+
+        if (! $user = $this->getUser()) {
             $request->getSession()->getFlashBag()->add('danger', 'Vous devez être connecté pour valider une commande');
 
             return $this->contenuPanierAction($request);
+        } elseif ( empty($panier->getContenu()) ) {
+            $request->getSession()->getFlashBag()->add('warning', 'Votre panier est vide');
+
+            return $this->contenuPanierAction($request);
         } else {
-            $client   = $this->getManagerForEntity('Client')->findOneById($request->getSession()->get('client_id'));
+            $client   = $this->getManagerForEntity('Client')->findOneById($user->getId());
             $commande = $this->buildCommande($em, $client);
 
             foreach ($panier->getContenu() as $article_id => $quantity) {

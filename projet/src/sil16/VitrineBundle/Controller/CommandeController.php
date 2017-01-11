@@ -21,7 +21,15 @@ class CommandeController extends Controller
         $em        = $this->getDoctrine()->getManager();
         $commandes = $em->getRepository('sil16VitrineBundle:Commande')->findAll();
 
-        return $this->render('commande/index.html.twig', array('commandes' => $commandes));
+        foreach ($commandes as $commande) {
+            $deleteForm = $this->createDeleteForm($commande);
+            $forms[]    = $deleteForm->createView();
+        }
+
+        return $this->render('commande/index.html.twig', array(
+            'commandes' => $commandes,
+            'delete_forms' => $forms
+        ));
     }
 
     /**
@@ -119,11 +127,12 @@ class CommandeController extends Controller
         ;
     }
 
-    public function indexClientAction(Request $request, $client_id)
+    public function indexClientAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        if ($client_id != -1) {
+        if ($user = $this->getUser()) {
+            $client_id = $user->getId();
             $client = $em->getRepository('sil16VitrineBundle:Client')->findOneById($client_id);
             $commandes = $em->getRepository('sil16VitrineBundle:Commande')->findBy(array('client' => $client));
 
@@ -131,7 +140,7 @@ class CommandeController extends Controller
         } else {
             $request->getSession()->getFlashBag()->add('warning','Vous n\'avez aucune commande pour le moment');
 
-            return $this->redirect($this->generateUrl('accueil'));
+            return $this->redirectToRoute('accueil');
         }
     }
 }

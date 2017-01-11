@@ -4,10 +4,10 @@ security:
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: ~
+#        in_memory:
+#            memory: ~
         utilisateurs:
-            entity: { class: sil16VitrineBundle:Client, property: email }
+            entity: { class: sil16VitrineBundle:Client, property: mail }
 
     firewalls:
         vitrine_area:
@@ -29,4 +29,4 @@ security:
 
     access_control:
       - { path: ^/backoffice, roles: ROLE_ADMIN }
-      - { path: ^/client, roles: ROLE_USER }
+#      - { path: ^/, roles: ROLE_USER }
