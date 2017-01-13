@@ -41,7 +41,7 @@
                             <span class="glyphicon glyphicon-user"></span> {{ app.user.nom }}
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ path('client_profil') }}">Mon profil</a></li>
+                            <li><a href="{{ path('client_profil', {'id': app.user.id }) }}">Mon profil</a></li>
                             <li><a href="{{ path('commande_indexClient') }}">Mes commandes</a></li>
                             <li class="divider"></li>
                             <li><a href="#">Déconnexion</a></li>

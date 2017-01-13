@@ -67,8 +67,3 @@ panierInformation:
 validerPanier:
     path:     /validerPanier
     defaults: { _controller: sil16VitrineBundle:Panier:validerPanier }
-
-#Spécial compte :
-siteAdmin:
-    path:     /admin
-    defaults: { _controller: sil16VitrineBundle:Admin:siteAdmin }

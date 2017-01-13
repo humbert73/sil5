@@ -1,10 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Client Profil</h1>
-
-    {{ form_start(edit_form) }}
-    {{ form_widget(edit_form) }}
-    <input type="submit" value="Edit" />
+    <h1>Mon profil</h1>
+    {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="nom">{{ form_label(edit_form.nom) }}</label>
+        <div class="col-sm-4">
+            {{ form_widget(edit_form.nom, { 'attr': {'class': 'form-control', 'id': 'nom' } }) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="mail">{{ form_label(edit_form.mail) }}</label>
+        <div class="col-sm-4">
+            {{ form_widget(edit_form.mail, { 'attr': {'class': 'form-control', 'id': 'mail'} }) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            {{ form_widget(edit_form) }}
+            <input class="btn btn-primary" type="submit" value="Mettre à jour" />
+        </div>
+    </div>
     {{ form_end(edit_form) }}
+    <a class="btn btn-primary btn-sm" href="{{ path('client_password', { 'id': client.id }) }}">Changer son mot de passe</a>
 {% endblock %}
