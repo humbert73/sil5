@@ -5,8 +5,6 @@ namespace sil16\VitrineBundle\Controller;
 use sil16\VitrineBundle\Entity\Client;
 use sil16\VitrineBundle\Form\ClientType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -135,8 +133,22 @@ class ClientController extends Controller
         ;
     }
 
-//    public function loginAction() {
-//        die;
-//        return $this->render('sil16VitrineBundle:Default:login.html.twig');
-//    }
+    public function profilAction(Request $request)
+    {
+
+        $client = $request->getUser();
+        $editForm = $this->createForm('sil16\VitrineBundle\Form\ClientType', $client);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('client_edit', array('id' => $client->getId()));
+        }
+
+        return $this->render('client/profil.html.twig', array(
+            'client' => $client,
+            'edit_form' => $editForm->createView(),
+        ));
+    }
 }

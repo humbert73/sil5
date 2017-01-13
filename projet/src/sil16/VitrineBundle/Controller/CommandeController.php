@@ -4,6 +4,7 @@ namespace sil16\VitrineBundle\Controller;
 
 use sil16\VitrineBundle\Entity\Commande;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -77,7 +78,9 @@ class CommandeController extends Controller
     public function editAction(Request $request, Commande $commande)
     {
         $deleteForm = $this->createDeleteForm($commande);
-        $editForm = $this->createForm('sil16\VitrineBundle\Form\CommandeType', $commande);
+        $editForm = $this->createFormBuilder($commande)
+            ->add('etat', CheckboxType::class, array('required' => false))
+            ->getForm();
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

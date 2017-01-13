@@ -17,7 +17,6 @@ class ClientType extends AbstractType
         $builder->add('nom', null, array('label' => 'Nom'));
         $builder->add('mail', "email", array('label' => 'Adresse email'));
         $builder->add('password', "password", array('label' => 'Mot de passe'));
-//        $builder->add('save', SubmitType::class, array('label' => 'Confirmer l\'inscription'));
     }
     
     /**

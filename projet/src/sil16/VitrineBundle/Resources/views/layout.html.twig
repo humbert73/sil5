@@ -20,11 +20,33 @@
                 <li><a href="{{ path('mentions') }}">mentions</a></li>
                 <li><a href="{{ path('catalogue') }}">catalogue</a></li>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <li><a href="{{ path('siteAdmin') }}">Site admin</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administration
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('article_index') }}">Article</a></li>
+                            <li><a href="{{ path('category_index') }}">Category</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ path('commande_index') }}">Commande</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ path('client_index') }}">Client</a></li>
+                        </ul>
+                    </li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if is_granted('ROLE_USER') %}
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <span class="glyphicon glyphicon-user"></span> {{ app.user.nom }}
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('client_profil') }}">Mon profil</a></li>
+                            <li><a href="{{ path('commande_indexClient') }}">Mes commandes</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Déconnexion</a></li>
+                        </ul>
+                    </li>
                     <li><a href="{{ path('logout') }}"><span class="glyphicon glyphicon-log-in"></span> Déconnexion</a></li>
                 {% else %}
                     <li><a href="{{ path('client_new') }}"><span class="glyphicon glyphicon-user"></span> S'inscrire</a></li>

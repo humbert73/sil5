@@ -70,5 +70,5 @@ validerPanier:
 
 #Spécial compte :
 siteAdmin:
-    path:     /siteAdmin
+    path:     /admin
     defaults: { _controller: sil16VitrineBundle:Admin:siteAdmin }
