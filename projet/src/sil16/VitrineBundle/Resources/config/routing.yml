@@ -28,12 +28,12 @@ mentions:
     defaults: { _controller: sil16VitrineBundle:Default:mentions }
 
 catalogue:
-    path:     /catalogue
-    defaults: { _controller: sil16VitrineBundle:Default:catalogue }
+    path:     /catalogue/{affichage}
+    defaults: { _controller: sil16VitrineBundle:Default:catalogue, affichage:list }
 
 catalogueWithCategory:
-    path:     /catalogue/{category_id}
-    defaults: { _controller: sil16VitrineBundle:Default:articlesByCategory }
+    path:     /catalogueWithCategory/{category_id}/{affichage}
+    defaults: { _controller: sil16VitrineBundle:Default:articlesByCategory, affichage:list }
 
 articlesLesPlusVendu:
     path:     /articlesLesPlusVendu

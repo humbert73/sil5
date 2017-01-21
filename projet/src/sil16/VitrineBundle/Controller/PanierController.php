@@ -51,7 +51,7 @@ class PanierController extends DefaultController
             );
         }
 
-        return $this->catalogueAction();
+        return $this->redirectToRoute('catalogue');
     }
 
     public function addArticleFromCategoryAction(Request $request, $article_id)

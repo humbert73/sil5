@@ -6,36 +6,82 @@
             <span class="caret"></span></button>
         <ul class="dropdown-menu">
             {% for category in categories %}
-                <li><a href="{{ path('catalogueWithCategory', { 'category_id': category.id }) }}">{{ category.getName }}</a></li>
+                <li><a href="{{ path('catalogueWithCategory', { 'category_id': category.id, 'affichage': affichage }) }}">{{ category.getName }}</a></li>
             {% endfor %}
         </ul>
     </div>
+    <div class="btn-group">
+        <a type="button" class="btn btn-default"
+           href="{{ path('catalogueWithCategory', { 'category_id': category.id, 'affichage': "list" }) }}" >
+            <span class="glyphicon glyphicon-th-list"></span>
+        </a>
+        <a type="button" class="btn btn-default"
+           href="{{ path('catalogueWithCategory', { 'category_id': category.id, 'affichage': "mozaic" }) }}">
+            <span class="glyphicon glyphicon-th"></span>
+        </a>
+    </div>
     <br>
-    {% for article in articles %}
-        <div class="col-md-3">
-            <div class="thumbnail">
-                <a href="{{ article.imageUrl }}">
-                    <img src="{{ article.imageUrl }}" alt="Lights" style="width:100%">
-                    <div class="caption">
-                        <p>{{ article.libelle }}</p>
-                    </div>
-                </a>
-                <p>Stock : {{ article.getStock }}</p>
-                <p>Prix : {{ article.getPrice }}€</p>
-                <p>
-                <form class="form-inline" action="{{ path('addArticle', { 'article_id': article.getId }) }}">
-                    <input class="hidden" name="stock" value="{{ article.getStock }}">
-                    <div class="form-group table-data-form-quantity">
-                        <label>Quantité :</label>
-                        <input name="quantity" id="input-quantity" class="form-control input-sm" type="number" min="1" max="999" value="1">
-                        <button type="submit" class="btn btn-default btn-xs">
-                            <span class="glyphicon glyphicon-plus"></span> Ajouter au panier
-                        </button>
-                    </div>
-                </form>
-                </p>
+
+    {% if affichage == 'list' %}
+        <table  class="table table-striped table-hover">
+            <thead>
+            <tr><th></th>
+                <th>Libelle</th>
+                <th class="table-data-price">Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for article in articles %}
+                <tr>
+                    <td><img class="thumbnail img-responsive" src="{{ article.imageUrl }}" alt="article" style="height:100px"></td>
+                    <td>{{ article.libelle }}</td>
+                    <td class="table-data-price">{{ article.price }}€</td>
+                    <td>{{ article.stock }}</td>
+                    <td class="table-data-actions">
+                        <form class="form-inline" action="{{ path('addArticle', { 'article_id': article.getId }) }}">
+                            <input class="hidden" name="stock" value="{{ article.getStock }}">
+                            <div class="form-group table-data-form-quantity">
+                                <label>Quantité :</label>
+                                <input name="quantity" id="input-quantity" class="form-control input-sm" type="number" min="1" max="999" value="1">
+                                <button type="submit" class="btn btn-default btn-xs">
+                                    <span class="glyphicon glyphicon-plus"></span> Ajouter au panier
+                                </button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {% for article in articles %}
+            <div class="col-md-3">
+                <div class="thumbnail">
+                    <a href="{{ article.imageUrl }}">
+                        <img src="{{ article.imageUrl }}" alt="Lights" style="width:100%">
+                        <div class="caption">
+                            <p>{{ article.libelle }}</p>
+                        </div>
+                    </a>
+                    <p>Stock : {{ article.getStock }}</p>
+                    <p>Prix : {{ article.getPrice }}€</p>
+                    <p>
+                    <form class="form-inline" action="{{ path('addArticle', { 'article_id': article.getId }) }}">
+                        <input class="hidden" name="stock" value="{{ article.getStock }}">
+                        <div class="form-group table-data-form-quantity">
+                            <label>Quantité :</label>
+                            <input name="quantity" id="input-quantity" class="form-control input-sm" type="number" min="1" max="999" value="1">
+                            <button type="submit" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-plus"></span> Ajouter au panier
+                            </button>
+                        </div>
+                    </form>
+                    </p>
+                </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    {% endif %}
 
 {% endblock %}

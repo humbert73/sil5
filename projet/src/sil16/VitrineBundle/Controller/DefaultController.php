@@ -34,25 +34,27 @@ class DefaultController extends Controller
         return $this->render('sil16VitrineBundle:Default:mentions.html.twig');
     }
 
-    public function catalogueAction()
+    public function catalogueAction($affichage)
     {
         return $this->render(
             'sil16VitrineBundle:Default:catalogue.html.twig',
             $articles = array(
                 'articles'   => $this->getManagerForEntity('Article')->findAll(),
-                'categories' => $this->getManagerForEntity('Category')->findAll()
+                'categories' => $this->getManagerForEntity('Category')->findAll(),
+                'affichage'  => $affichage
             )
         );
     }
 
-    public function articlesByCategoryAction($category_id)
+    public function articlesByCategoryAction($category_id, $affichage)
     {
         return $this->render(
             'sil16VitrineBundle:Default:articlesByCategory.html.twig',
             array(
                 'category'   => $this->getCategoryById($category_id),
                 'articles'   => $this->getCategoryById($category_id)->getArticles(),
-                'categories' => $this->getManagerForEntity('Category')->findAll()
+                'categories' => $this->getManagerForEntity('Category')->findAll(),
+                'affichage'  => $affichage
             )
         );
     }
@@ -74,7 +76,7 @@ class DefaultController extends Controller
     public function updateNbTopArticlesAction(Request $request) {
         $request->getSession()->set('nbTopArticles', $request->get('quantity'));
 
-        return $this->catalogueAction($request);
+        return $this->redirectToRoute('catalogue');
     }
 
 
