@@ -20,4 +20,4 @@ sil16\VitrineBundle\Entity\Commande:
   oneToMany:
     lignesDeCommandes:
       targetEntity: LigneDeCommande
-      mappedBy: Commande
+      mappedBy: commande

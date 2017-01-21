@@ -234,4 +234,14 @@ class Commande
     {
         return $this->lignesDeCommandes;
     }
+
+    public function getPrice() {
+        $prix = 0;
+
+        foreach ($this->getLignesDeCommandes() as $ligneDeCommande) {
+            $prix += $ligneDeCommande->getArticle()->getPrice()*$ligneDeCommande->getQuantite();
+        }
+
+        return $prix;
+    }
 }

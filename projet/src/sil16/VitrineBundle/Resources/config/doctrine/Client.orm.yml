@@ -15,4 +15,4 @@ sil16\VitrineBundle\Entity\Client:
   oneToMany:
     commandes:
       targetEntity: Commande
-      mappedBy: Client
+      mappedBy: client

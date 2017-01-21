@@ -138,8 +138,17 @@ class CommandeController extends Controller
             $client_id = $user->getId();
             $client = $em->getRepository('sil16VitrineBundle:Client')->findOneById($client_id);
             $commandes = $em->getRepository('sil16VitrineBundle:Commande')->findBy(array('client' => $client));
+            $prices = array();
 
-            return $this->render('commande/indexClient.html.twig', array('commandes' => $commandes, 'client_id' => $client_id));
+            foreach ($commandes as $commande) {
+                $prices[] = $commande->getPrice();
+            }
+
+            return $this->render('commande/indexClient.html.twig', array(
+                'commandes' => $commandes,
+                'client_id' => $client_id,
+                'prices'    => $prices
+            ));
         } else {
             $request->getSession()->getFlashBag()->add('warning','Vous n\'avez aucune commande pour le moment');
 

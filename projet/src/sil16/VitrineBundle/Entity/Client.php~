@@ -26,6 +26,11 @@ class Client implements UserInterface, Serializable
      */
     private $mail;
 
+    /**
+     * @var string
+     */
+    private $password;
+
 
     /**
      * Get id
@@ -149,13 +154,10 @@ class Client implements UserInterface, Serializable
 
     public function getPassword()
     {
-        // TODO: Implement getPassword() method.
+        return $this->password;
     }
 
-    public function eraseCredentials()
-    {
-
-    }
+    public function eraseCredentials(){}
 
     public function serialize()
     {
@@ -170,5 +172,28 @@ class Client implements UserInterface, Serializable
     public function __toString()
     {
         return $this->nom;
+    }
+
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return Client
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    private function isAdministrateur()
+    {
+        if ($this->getMail() === "moreaux@mail.com" || $this->getMail() === "admin@mail.com") {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
