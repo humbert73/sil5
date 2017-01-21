@@ -2,21 +2,26 @@
 {% block body %}
     <div class="container-fluid">
         <h1>Liste de vos commandes</h1>
-        <table  class="table table-striped table-hover">
-            <thead>
-            <tr>
-                <th>Date Etat</th>
-                <th>Etat</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for commande in commandes %}
-                <tr>
-                    <td>{% if commande.date %}{{ commande.date|date('Y-m-d') }}{% endif %}</td>
-                    <td>{% if commande.etat %}passé{% endif %}{% if not commande.etat %}validée{% endif %}</td>
-                </tr>
+        {% for commande in commandes %}
+            {% if commande.date %}<h3>Commande du {{ commande.date|date('Y-m-d') }} :</h3>{% endif %}
+            <p>Etat : {% if commande.etat %}passé{% endif %}{% if not commande.etat %}validée{% endif %}</p>
+            <h4>Articles</h4>
+            <ul>
+            {% for ligneDeCommande in commande.lignesDeCommandes %}
+                <li>{{ ligneDeCommande.article.libelle }}</li>
             {% endfor %}
-            </tbody>
-        </table>
+            </ul>
+        {% endfor %}
+        {#<table  class="table table-striped table-hover">#}
+            {#<thead>#}
+            {#<tr>#}
+                {#<th>Date Etat</th>#}
+                {#<th>Etat</th>#}
+            {#</tr>#}
+            {#</thead>#}
+            {#<tbody>#}
+
+            {#</tbody>#}
+        {#</table>#}
     </div>
 {% endblock %}

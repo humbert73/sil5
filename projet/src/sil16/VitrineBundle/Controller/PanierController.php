@@ -134,7 +134,7 @@ class PanierController extends DefaultController
             $request->getSession()->getFlashBag()->add('danger', 'Vous devez être connecté pour valider une commande');
 
             return $this->contenuPanierAction($request);
-        } elseif ( empty($panier->getContenu()) ) {
+        } else if ( empty($panier->getContenu()) ) {
             $request->getSession()->getFlashBag()->add('warning', 'Votre panier est vide');
 
             return $this->contenuPanierAction($request);
