@@ -14,6 +14,8 @@ sil16\VitrineBundle\Entity\Article:
       scale: 2
     stock:
       type: integer
+    image_url:
+      type: string
   manyToOne:
     category:
       targetEntity: Category

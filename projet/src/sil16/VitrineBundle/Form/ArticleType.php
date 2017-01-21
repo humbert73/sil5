@@ -14,7 +14,7 @@ class ArticleType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('libelle')->add('price')->add('stock')->add('category', EntityType::class, array(
+        $builder->add('libelle')->add('price')->add('stock')->add('imageUrl')->add('category', EntityType::class, array(
             'class' => 'sil16VitrineBundle:Category',
             'choice_label' => 'name'
         ))        ;

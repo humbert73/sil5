@@ -35,6 +35,11 @@ class Article
     private $category;
 
     /**
+     * @var string
+     */
+    private $image_url;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -180,5 +185,28 @@ class Article
     public function getStock()
     {
         return $this->stock;
+    }
+
+    /**
+     * Set image_url
+     *
+     * @param string $imageUrl
+     * @return Article
+     */
+    public function setImageUrl($imageUrl)
+    {
+        $this->image_url = $imageUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get image_url
+     *
+     * @return string 
+     */
+    public function getImageUrl()
+    {
+        return $this->image_url;
     }
 }
