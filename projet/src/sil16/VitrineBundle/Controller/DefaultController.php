@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
+
+    const DEFAULT_NB_TOP_ARTICLES = 7;
+
     public function indexAction(Request $request, $name)
     {
         return $this->render(
@@ -54,12 +57,24 @@ class DefaultController extends Controller
         );
     }
 
-    public function articlesLesPlusVenduAction()
+    public function articlesLesPlusVenduAction(Request $request)
     {
+        if ($request->getSession()->has('nbTopArticles')) {
+            $number_of_articles = $request->getSession()->get('nbTopArticles');
+        } else {
+            $number_of_articles = self::DEFAULT_NB_TOP_ARTICLES;
+        }
+
         return $this->render(
             'sil16VitrineBundle:Default:articlesLesPlusVendu.html.twig',
-            array('articles' => $this->getManagerForEntity('Article')->getTopSellingArticles())
+            array('articles' => $this->getManagerForEntity('Article')->getTopSellingArticles($number_of_articles))
         );
+    }
+
+    public function updateNbTopArticlesAction(Request $request) {
+        $request->getSession()->set('nbTopArticles', $request->get('quantity'));
+
+        return $this->catalogueAction($request);
     }
 
 

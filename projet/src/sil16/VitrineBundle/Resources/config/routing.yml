@@ -39,6 +39,10 @@ articlesLesPlusVendu:
     path:     /articlesLesPlusVendu
     defaults: { _controller: sil16VitrineBundle:Default:articlesLesPlusVendu }
 
+updateNbTopArticles:
+    path:     /updateNbTopArticles
+    defaults: { _controller: sil16VitrineBundle:Default:updateNbTopArticles }
+
 #Actions relatif au panier
 contenuPanier:
     path:     /panier

@@ -40,12 +40,12 @@ class PanierController extends DefaultController
         try {
             $this->addArticle($request, $article_id);
         } catch (IsNotValidRequestException $exception) {
-            $this->get('session')->getFlashBag()->add(
+            $request->getSession()->getFlashBag()->add(
                 'danger',
                 "La requête n'est pas valide"
             );
         } catch (IsNotValidQuantityException $exception) {
-            $this->get('session')->getFlashBag()->add(
+            $request->getSession()->getFlashBag()->add(
                 'danger',
                 "La quantité doit être comprise entre 1 et la limite du stock"
             );
@@ -54,10 +54,10 @@ class PanierController extends DefaultController
         return $this->catalogueAction();
     }
 
-    public function addArticleFromCategoryAction($article_id)
+    public function addArticleFromCategoryAction(Request $request, $article_id)
     {
         try {
-            $this->addArticle($article_id);
+            $this->addArticle($request, $article_id);
         } catch (IsNotValidRequestException $exception) {
             $this->get('session')->getFlashBag()->add(
                 'danger',
@@ -101,9 +101,10 @@ class PanierController extends DefaultController
     {
         $this->getPanier($request)->supprimeArticle($article_id);
         $article_libelle = $this->getManagerForEntity('Article')->findOneById($article_id)->getLibelle();
-        $this->get('session')->getFlashBag()->add(
+        $request->getSession()->getFlashBag()->add(
             'success',
-            "L'article $article_libelle à été retirer du panier avec succès");
+            "L'article $article_libelle à été retirer du panier avec succès"
+        );
 
         return $this->contenuPanierAction($request);
     }
@@ -111,7 +112,7 @@ class PanierController extends DefaultController
     public function removePanierContentAction(Request $request)
     {
         $this->getPanier($request)->viderPanier();
-        $this->get('session')->getFlashBag()->add('success', 'Panier vider avec succès');
+        $request->getSession()->getFlashBag()->add('success', 'Panier vider avec succès');
 
         return $this->contenuPanierAction($request);
     }
@@ -150,7 +151,7 @@ class PanierController extends DefaultController
             $request->getSession()->getFlashBag()->add('success', 'Panier validé avec succès');
         }
 
-        return $this->catalogueAction($request);
+        return $this->catalogueAction();
     }
 
     private function buildCommande(EntityManager $em, Client $client)

@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
-    public function getTopSellingArticles()
+    public function getTopSellingArticles($number_of_articles)
     {
         $top_articles = $this->getEntityManager()
             ->createQuery(
@@ -22,7 +22,7 @@ class ArticleRepository extends EntityRepository
                 GROUP BY article.id
                 ORDER BY quantite_article DESC'
             )
-            ->setMaxResults(7)
+            ->setMaxResults($number_of_articles)
             ->getResult();
 
         foreach ($top_articles as $id => $article_and_quantity) {
