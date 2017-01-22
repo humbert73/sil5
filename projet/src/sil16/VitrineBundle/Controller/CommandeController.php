@@ -21,6 +21,7 @@ class CommandeController extends Controller
     {
         $em        = $this->getDoctrine()->getManager();
         $commandes = $em->getRepository('sil16VitrineBundle:Commande')->findAll();
+        $forms     = array();
 
         foreach ($commandes as $commande) {
             $deleteForm = $this->createDeleteForm($commande);

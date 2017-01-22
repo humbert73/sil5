@@ -21,9 +21,9 @@ class ClientController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em      = $this->getDoctrine()->getManager();
         $clients = $em->getRepository('sil16VitrineBundle:Client')->findAll();
+        $forms   = array();
 
         foreach ($clients as $client) {
             $deleteForm = $this->createDeleteForm($client);
@@ -31,7 +31,7 @@ class ClientController extends Controller
         }
 
         return $this->render('client/index.html.twig', array(
-            'clients' => $clients,
+            'clients'      => $clients,
             'delete_forms' => $forms
         ));
     }
@@ -43,7 +43,7 @@ class ClientController extends Controller
     public function newAction(Request $request)
     {
         $client = new Client();
-        $form = $this->createForm(new ClientType(), $client);
+        $form   = $this->createForm(new ClientType(), $client);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -60,7 +60,7 @@ class ClientController extends Controller
 
         return $this->render('client/new.html.twig', array(
             'client' => $client,
-            'form' => $form->createView(),
+            'form'   => $form->createView(),
         ));
     }
 
@@ -73,7 +73,7 @@ class ClientController extends Controller
         $deleteForm = $this->createDeleteForm($client);
 
         return $this->render('client/show.html.twig', array(
-            'client' => $client,
+            'client'      => $client,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -85,12 +85,12 @@ class ClientController extends Controller
     public function editAction(Request $request, Client $client)
     {
         $deleteForm = $this->createDeleteForm($client);
-        $editForm = $this->createForm(new ClientType(), $client);
+        $editForm   = $this->createForm(new ClientType(), $client);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            $em = $this->getDoctrine()->getManager();
+            $em      = $this->getDoctrine()->getManager();
             $encoder = $this->container->get('security.password_encoder');
             $encoded = $encoder->encodePassword($client, $client->getPassword());
             $client->setPassword($encoded);
@@ -102,8 +102,8 @@ class ClientController extends Controller
         }
 
         return $this->render('client/edit.html.twig', array(
-            'client' => $client,
-            'edit_form' => $editForm->createView(),
+            'client'      => $client,
+            'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -138,27 +138,26 @@ class ClientController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('client_delete', array('id' => $client->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 
     public function profilAction(Request $request, Client $client)
     {
         $editForm = $this->createFormBuilder($client)
-            ->add('nom', null, array('label' => 'Nom', 'data' => $client->getNom() ))
+            ->add('nom', null, array('label' => 'Nom', 'data' => $client->getNom()))
             ->add('mail', "email", array('label' => 'Adresse email', 'data' => $client->getMail()))
             ->getForm();
 
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid() ) {
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('client_profil', array('id' => $client->getId()));
         }
 
         return $this->render('client/profil.html.twig', array(
-            'client' => $client,
+            'client'    => $client,
             'edit_form' => $editForm->createView(),
         ));
     }
@@ -178,7 +177,7 @@ class ClientController extends Controller
             ->getForm();
         $passwordForm->handleRequest($request);
 
-        if ($passwordForm->isSubmitted() && $passwordForm->isValid() ) {
+        if ($passwordForm->isSubmitted() && $passwordForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $encoder = $this->container->get('security.password_encoder');
@@ -192,7 +191,7 @@ class ClientController extends Controller
         }
 
         return $this->render('client/password.html.twig', array(
-            'client' => $client,
+            'client'        => $client,
             'password_form' => $passwordForm->createView(),
         ));
     }

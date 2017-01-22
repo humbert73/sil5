@@ -18,9 +18,9 @@ class CategoryController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em         = $this->getDoctrine()->getManager();
         $categories = $em->getRepository('sil16VitrineBundle:Category')->findAll();
+        $forms      = array();
 
         foreach ($categories as $category) {
             $deleteForm = $this->createDeleteForm($category);
@@ -28,7 +28,7 @@ class CategoryController extends Controller
         }
 
         return $this->render('category/index.html.twig', array(
-            'categories' => $categories,
+            'categories'   => $categories,
             'delete_forms' => $forms
         ));
     }
@@ -40,7 +40,7 @@ class CategoryController extends Controller
     public function newAction(Request $request)
     {
         $category = new Category();
-        $form = $this->createForm('sil16\VitrineBundle\Form\CategoryType', $category);
+        $form     = $this->createForm('sil16\VitrineBundle\Form\CategoryType', $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -53,7 +53,7 @@ class CategoryController extends Controller
 
         return $this->render('category/new.html.twig', array(
             'category' => $category,
-            'form' => $form->createView(),
+            'form'     => $form->createView(),
         ));
     }
 
@@ -66,7 +66,7 @@ class CategoryController extends Controller
         $deleteForm = $this->createDeleteForm($category);
 
         return $this->render('category/show.html.twig', array(
-            'category' => $category,
+            'category'    => $category,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -78,7 +78,7 @@ class CategoryController extends Controller
     public function editAction(Request $request, Category $category)
     {
         $deleteForm = $this->createDeleteForm($category);
-        $editForm = $this->createForm('sil16\VitrineBundle\Form\CategoryType', $category);
+        $editForm   = $this->createForm('sil16\VitrineBundle\Form\CategoryType', $category);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -88,8 +88,8 @@ class CategoryController extends Controller
         }
 
         return $this->render('category/edit.html.twig', array(
-            'category' => $category,
-            'edit_form' => $editForm->createView(),
+            'category'    => $category,
+            'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -124,7 +124,6 @@ class CategoryController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('category_delete', array('id' => $category->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

@@ -151,7 +151,7 @@ class PanierController extends DefaultController
             $request->getSession()->getFlashBag()->add('success', 'Panier validé avec succès');
         }
 
-        return $this->catalogueAction();
+        return $this->redirectToRoute('catalogue');
     }
 
     private function buildCommande(EntityManager $em, Client $client)
