@@ -1,6 +1,6 @@
 commande_index:
-    path:     /admin/{client_id}
-    defaults: { _controller: "sil16VitrineBundle:Commande:index", client_id:null }
+    path:     /admin/
+    defaults: { _controller: "sil16VitrineBundle:Commande:index"}
     methods:  GET
 
 commande_show:
@@ -23,7 +23,7 @@ commande_delete:
     defaults: { _controller: "sil16VitrineBundle:Commande:delete" }
     methods:  DELETE
 
-commande_indexClient:
-    path:     /{client_id}/listCommande
-    defaults: { _controller: "sil16VitrineBundle:Commande:indexClient", client_id:-1 }
+commande_mesCommandes:
+    path:     /user/mesCommandes
+    defaults: { _controller: "sil16VitrineBundle:Commande:mesCommandes"}
     methods:  GET

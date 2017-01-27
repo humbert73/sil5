@@ -42,9 +42,9 @@
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ path('client_profil', {'id': app.user.id }) }}">Mon profil</a></li>
-                            <li><a href="{{ path('commande_indexClient') }}">Mes commandes</a></li>
+                            <li><a href="{{ path('commande_mesCommandes') }}">Mes commandes</a></li>
                             <li class="divider"></li>
-                            <li><a href="#">Déconnexion</a></li>
+                            <li><a href="{{ path('logout') }}"><span class="glyphicon glyphicon-log-in"></span> Déconnexion</a></li>
                         </ul>
                     </li>
                     <li><a href="{{ path('logout') }}"><span class="glyphicon glyphicon-log-in"></span> Déconnexion</a></li>

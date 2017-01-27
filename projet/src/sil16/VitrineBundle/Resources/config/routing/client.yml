@@ -24,11 +24,11 @@ client_delete:
     methods:  DELETE
 
 client_profil:
-    path:     /{id}/profil
+    path:     /user/{id}/profil
     defaults: { _controller: "sil16VitrineBundle:Client:profil" }
     methods:  [GET, POST]
 
 client_password:
-    path:     /{id}/password
+    path:     /user/{id}/password
     defaults: { _controller: "sil16VitrineBundle:Client:password" }
     methods:  [GET, POST]

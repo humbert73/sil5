@@ -1,0 +1,15 @@
+Création d'un bundle :
+php app/console generate:bundle --namespace=silXX/VitrineBundle --format=yml
+
+Création d'un formulaire pour une entité donnée :
+php app/console doctrine:generate:crud --entity=silXXVitrineBundle:Category --with-write --format=yml
+
+Générer une entity :
+doctrine:generate:intitiessil16/VitrineBundle/Entity/Product --path=src/
+
+Générer toutes les entities
+doctrine:generate:entities sil16 --path=src/
+
+Update schéma des entities :
+doctrine:schema:update --force
+

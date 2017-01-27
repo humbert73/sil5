@@ -131,29 +131,28 @@ class CommandeController extends Controller
         ;
     }
 
-    public function indexClientAction(Request $request)
+    public function mesCommandesAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        if ($user = $this->getUser()) {
-            $client_id = $user->getId();
-            $client = $em->getRepository('sil16VitrineBundle:Client')->findOneById($client_id);
-            $commandes = $em->getRepository('sil16VitrineBundle:Commande')->findBy(array('client' => $client));
-            $prices = array();
-
-            foreach ($commandes as $commande) {
-                $prices[] = $commande->getPrice();
-            }
-
-            return $this->render('commande/indexClient.html.twig', array(
-                'commandes' => $commandes,
-                'client_id' => $client_id,
-                'prices'    => $prices
-            ));
-        } else {
+        $client_id = $this->getUser()->getId();
+        $client = $em->getRepository('sil16VitrineBundle:Client')->findOneById($client_id);
+        $commandes = $em->getRepository('sil16VitrineBundle:Commande')->findBy(array('client' => $client));
+        if (! $commandes) {
             $request->getSession()->getFlashBag()->add('warning','Vous n\'avez aucune commande pour le moment');
 
             return $this->redirectToRoute('accueil');
         }
+        $prices = array();
+
+        foreach ($commandes as $commande) {
+            $prices[] = $commande->getPrice();
+        }
+
+        return $this->render('commande/mesCommandes.html.twig', array(
+            'commandes' => $commandes,
+            'client_id' => $client_id,
+            'prices'    => $prices
+        ));
     }
 }
