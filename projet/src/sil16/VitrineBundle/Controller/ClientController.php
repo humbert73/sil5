@@ -152,6 +152,7 @@ class ClientController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            $request->getSession()->getFlashBag()->add('success', 'Votre profil à bien été mis à jour');
 
             return $this->redirectToRoute('client_profil', array('id' => $client->getId()));
         }
@@ -164,7 +165,6 @@ class ClientController extends Controller
 
     public function passwordAction(Request $request, Client $client)
     {
-
         $passwordForm = $this->createFormBuilder($client)
             ->add('password', RepeatedType::class, array(
                 'type'            => PasswordType::class,
@@ -177,6 +177,9 @@ class ClientController extends Controller
             ->getForm();
         $passwordForm->handleRequest($request);
 
+        if ($passwordForm->isSubmitted() && ! $passwordForm->isValid()) {
+            $request->getSession()->getFlashBag()->add('danger', 'Les deux mot de passe ne corresponde pas');
+        }
         if ($passwordForm->isSubmitted() && $passwordForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
@@ -186,6 +189,7 @@ class ClientController extends Controller
             $em->persist($client);
             $em->flush($client);
             $request->getSession()->set('client_id', $client->getId());
+            $request->getSession()->getFlashBag()->add('success', 'Votre mot de passe à bien été mis à jour');
 
             return $this->redirectToRoute('client_profil', array('id' => $client->getId()));
         }

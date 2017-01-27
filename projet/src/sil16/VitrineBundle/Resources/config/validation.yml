@@ -10,14 +10,3 @@ sil16\VitrineBundle\Entity\Client:
   password:
     - NotBlank: ~
     - Type: \UserPassword
-
-#  mail:
-#    - NotBlank: ~
-#    - Type: \email
-#  password:
-#    - NotBlank: ~
-#    - Type: \PasswordType
-
-#  mail:
-#    - NotBlank: ~
-#    - Type: \EmailType
