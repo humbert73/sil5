@@ -23,7 +23,3 @@ sil16\VitrineBundle\Entity\Article:
       joinColumn:
         name: category_id
         referencedColumnName: id
-#  oneToMany:
-#    ligneDeCommande:
-#      targetEntity: LigneDeCommande
-#      mappedBy: Commande

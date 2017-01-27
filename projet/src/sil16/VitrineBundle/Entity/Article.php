@@ -24,10 +24,10 @@ class Article
      */
     private $price;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $ligneDeCommande;
+//    /**
+//     * @var \Doctrine\Common\Collections\Collection
+//     */
+//    private $ligneDeCommande;
 
     /**
      * @var \sil16\VitrineBundle\Entity\Category
@@ -38,14 +38,6 @@ class Article
      * @var string
      */
     private $image_url;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->ligneDeCommande = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -109,32 +101,6 @@ class Article
      * @param \sil16\VitrineBundle\Entity\LigneDeCommande $ligneDeCommande
      * @return Article
      */
-    public function addLigneDeCommande(\sil16\VitrineBundle\Entity\LigneDeCommande $ligneDeCommande)
-    {
-        $this->ligneDeCommande[] = $ligneDeCommande;
-
-        return $this;
-    }
-
-    /**
-     * Remove ligneDeCommande
-     *
-     * @param \sil16\VitrineBundle\Entity\LigneDeCommande $ligneDeCommande
-     */
-    public function removeLigneDeCommande(\sil16\VitrineBundle\Entity\LigneDeCommande $ligneDeCommande)
-    {
-        $this->ligneDeCommande->removeElement($ligneDeCommande);
-    }
-
-    /**
-     * Get ligneDeCommande
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getLigneDeCommande()
-    {
-        return $this->ligneDeCommande;
-    }
 
     /**
      * Set category
@@ -158,11 +124,11 @@ class Article
     {
         return $this->category;
     }
+
     /**
      * @var integer
      */
     private $stock;
-
 
     /**
      * Set stock
